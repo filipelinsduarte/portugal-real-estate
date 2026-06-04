@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy Property in Portugal | Free Agent Matching Service</title>
+  <meta name="description" content="Find apartments, villas and houses for sale in Portugal. We match you with a licensed local agent at zero cost. Lisbon, Porto, Algarve and beyond." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prata&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Schema: Organization + Website + FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Portugal Real Estate for Sale",
+    "url": "https://www.portugalrealestateforsale.com",
+    "description": "Free agent matching service for international buyers of Portuguese property.",
+    "areaServed": { "@type": "Country", "name": "Portugal" },
+    "contactPoint": { "@type": "ContactPoint", "contactType": "Customer Support", "email": "hello@portugalrealestateforsale.com" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can foreigners buy property in Portugal?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Portugal places no restrictions on foreign nationals purchasing property. Non-EU and EU citizens alike can buy freely following the same legal steps as Portuguese nationals: promissory contract, fiscal number (NIF), and final deed at a notary." }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the costs of buying property in Portugal?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Budget for 6 to 8 percent of the purchase price in transaction costs, covering IMT transfer tax (0 to 8 percent depending on value), stamp duty at 0.8 percent, notary and land registry fees, and legal fees of 1 to 2 percent. Our agent matching service costs buyers nothing." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Portugal NHR tax regime?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Non-Habitual Resident status offers qualifying new tax residents a flat 20 percent rate on Portuguese-source income and potential exemptions on foreign-source income for 10 years. You qualify by not having been a Portuguese tax resident in the previous 5 years." }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the best areas to buy property in Portugal?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Lisbon offers the most liquid market with strong capital appreciation. The Algarve suits buyers prioritising lifestyle and rental yield. Porto delivers strong short-term rental returns at lower entry prices. The Silver Coast and Alentejo offer authentic Portugal at 40 to 60 percent below Lisbon prices." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Portugal real estate a good investment in 2025?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Portugal has seen consistent price growth averaging 7 to 10 percent annually in prime urban markets since 2017. Gross rental yields in Lisbon range from 3 to 5 percent, higher in Porto and the Algarve. Strong tourism demand and limited housing supply continue to support the market." }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #ffffff;
+      --surface:   #f7f3ee;
+      --cream:     #fdfaf6;
+      --accent:    #c2622a;
+      --accent-h:  #a8521f;
+      --ink:       #1a1a1a;
+      --secondary: #5c5c5c;
+      --muted:     #8a8a8a;
+      --border:    #ddd8d0;
+      --pad:       5vw;
+      --nav-h:     66px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Prata', serif; font-weight: 400; line-height: 1.15; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: #fff; height: var(--nav-h);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--pad);
+    }
+
+    .nav-logo { font-family: 'Prata', serif; font-size: 22px; color: var(--ink); }
+    .nav-logo span { color: var(--muted); }
+
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 13px; font-weight: 500; color: var(--secondary); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase; border-radius: 0;
+      padding: 13px 26px; border: 1px solid transparent; transition: all 0.15s;
+    }
+    .btn-primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .btn-primary:hover { background: #2e2e2e; }
+    .btn-accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-accent:hover { background: var(--accent-h); border-color: var(--accent-h); }
+    .btn-ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
+    .btn-ghost:hover { background: var(--ink); color: #fff; }
+    .btn-ghost-light { background: transparent; color: #fff; border-color: rgba(255,255,255,0.5); }
+    .btn-ghost-light:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+    .btn-sm { padding: 9px 18px; font-size: 11px; }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--cream);
+      padding: 96px var(--pad) 80px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: inline-block;
+      width: 24px; height: 1px; background: var(--border);
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 54px);
+      color: var(--ink); margin-bottom: 18px; max-width: 600px;
+    }
+
+    .hero-sub {
+      font-size: 16px; color: var(--secondary);
+      max-width: 480px; margin-bottom: 36px; line-height: 1.7;
+    }
+
+    /* Step 1 form */
+    .hero-form {
+      display: flex; gap: 0; max-width: 460px; margin-bottom: 12px;
+    }
+    .hero-form input {
+      flex: 1; border: 1px solid var(--border); border-right: none;
+      background: #fff; font-family: 'Inter', sans-serif; font-size: 14px;
+      padding: 14px 18px; color: var(--ink); outline: none;
+    }
+    .hero-form input::placeholder { color: var(--muted); }
+    .hero-form input:focus { border-color: var(--ink); }
+    .hero-form button {
+      background: var(--accent); color: #fff;
+      border: 1px solid var(--accent); border-radius: 0;
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 14px 22px; transition: background 0.15s; white-space: nowrap;
+    }
+    .hero-form button:hover { background: var(--accent-h); }
+
+    .hero-privacy {
+      font-size: 11px; color: var(--muted); margin-bottom: 28px;
+    }
+
+    .hero-secondary {
+      font-size: 13px; color: var(--secondary);
+      border-bottom: 1px solid var(--border); padding-bottom: 1px;
+      display: inline; transition: color 0.15s; cursor: pointer;
+    }
+    .hero-secondary:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* Trust strip */
+    .trust-strip {
+      display: flex; align-items: center; gap: 0;
+      margin-top: 40px; padding-top: 32px;
+      border-top: 1px solid var(--border);
+      max-width: 600px;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--secondary);
+      padding-right: 28px; margin-right: 28px;
+      border-right: 1px solid var(--border);
+    }
+    .trust-item:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+    /* ── How It Works ── */
+    .how-section {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 56px var(--pad);
+    }
+    .how-inner {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .how-step {
+      padding: 0 40px 0 0;
+      border-right: 1px solid var(--border);
+      margin-right: 40px;
+    }
+    .how-step:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .how-num {
+      font-family: 'Prata', serif; font-size: 32px; color: var(--ink);
+      margin-bottom: 12px; line-height: 1;
+    }
+    .how-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .how-body { font-size: 13px; color: var(--secondary); line-height: 1.6; }
+
+    /* ── Listings ── */
+    .listings-section { padding: 72px var(--pad); background: var(--bg); }
+    .listings-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 36px;
+    }
+    .listings-header h2 { font-size: clamp(24px, 3vw, 36px); }
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+    }
+    .listings-header a {
+      font-size: 12px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--secondary);
+      border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: all 0.15s;
+    }
+    .listings-header a:hover { color: var(--ink); border-color: var(--ink); }
+
+    .listings-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+    .listing-card { border: 1px solid var(--border); background: #fff; transition: border-color 0.15s; }
+    .listing-card:hover { border-color: #b8a898; }
+
+    .card-img {
+      width: 100%; aspect-ratio: 13/8;
+      position: relative; overflow: hidden;
+    }
+    .card-img.tone-1 { background: #d6cfc7; }
+    .card-img.tone-2 { background: #c9c4be; }
+    .card-img.tone-3 { background: #cfc8bf; }
+    .card-img.tone-4 { background: #d4cdc5; }
+
+    .card-img-inner {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-img-svg { width: 40px; height: 40px; opacity: 0.22; }
+
+    .card-tag {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--ink); color: #fff;
+      font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 4px 9px; z-index: 1;
+    }
+    .card-tag.tag-new { background: var(--accent); }
+
+    .card-body { padding: 16px 18px 18px; }
+    .card-type {
+      font-size: 10px; font-weight: 600; letter-spacing: 1.8px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
+    }
+    .card-title {
+      font-family: 'Prata', serif; font-size: 16px;
+      color: var(--ink); margin-bottom: 4px; line-height: 1.3;
+    }
+    .card-location {
+      font-size: 12px; color: var(--muted);
+      display: flex; align-items: center; gap: 5px; margin-bottom: 14px;
+    }
+    .card-location::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--border); flex-shrink: 0;
+    }
+    .card-divider { height: 1px; background: var(--border); margin-bottom: 14px; }
+    .card-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .card-price { font-family: 'Prata', serif; font-size: 19px; color: var(--ink); }
+    .card-specs { display: flex; gap: 10px; }
+    .card-spec { font-size: 11px; color: var(--muted); }
+
+    .card-enquire {
+      width: 100%; background: transparent; color: var(--ink);
+      border: 1px solid var(--border); font-family: 'Inter', sans-serif;
+      font-size: 11px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; padding: 9px; transition: all 0.15s;
+    }
+    .card-enquire:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+    /* Mid-grid capture strip */
+    .capture-strip {
+      grid-column: 1 / -1;
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 32px 40px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      margin: 4px 0;
+    }
+    .capture-strip-text h3 { font-family: 'Prata', serif; font-size: 20px; margin-bottom: 4px; }
+    .capture-strip-text p { font-size: 13px; color: var(--secondary); }
+    .capture-strip-form { display: flex; gap: 0; flex-shrink: 0; }
+    .capture-strip-form input {
+      border: 1px solid var(--border); border-right: none;
+      background: #fff; font-family: 'Inter', sans-serif;
+      font-size: 13px; padding: 11px 16px; color: var(--ink);
+      outline: none; width: 220px;
+    }
+    .capture-strip-form input:focus { border-color: var(--ink); }
+    .capture-strip-form button {
+      background: var(--ink); color: #fff; border: none;
+      font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 11px 20px; transition: background 0.15s; white-space: nowrap;
+    }
+    .capture-strip-form button:hover { background: #333; }
+
+    /* ── Regions ── */
+    .regions-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 64px var(--pad);
+    }
+    .regions-header { margin-bottom: 32px; }
+    .regions-header h2 { font-size: clamp(22px, 3vw, 32px); }
+    .regions-panel { border: 1px solid var(--border); display: grid; grid-template-columns: repeat(5, 1fr); }
+    .region-item {
+      padding: 28px 24px; border-right: 1px solid var(--border);
+      transition: background 0.15s; cursor: pointer;
+    }
+    .region-item:last-child { border-right: none; }
+    .region-item:hover { background: var(--bg); }
+    .region-number { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .region-name { font-family: 'Prata', serif; font-size: 20px; color: var(--ink); margin-bottom: 6px; }
+    .region-tag {
+      display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--ink);
+      border: 1px solid var(--border); padding: 3px 8px; margin-bottom: 12px;
+    }
+    .region-count { font-size: 12px; color: var(--secondary); }
+    .region-count span { color: var(--ink); font-weight: 600; }
+
+    /* ── Value Props ── */
+    .value-section {
+      padding: 72px var(--pad);
+      border-bottom: 1px solid var(--border);
+    }
+    .value-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .value-left h2 { font-size: clamp(22px, 3vw, 32px); margin-bottom: 16px; }
+    .value-left p { font-size: 14px; color: var(--secondary); line-height: 1.7; margin-bottom: 28px; max-width: 380px; }
+    .value-props { border: 1px solid var(--border); }
+    .value-prop {
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .value-prop:last-child { border-bottom: none; }
+    .value-prop-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+    .value-prop-body { font-size: 13px; color: var(--secondary); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    .faq-section {
+      padding: 72px var(--pad);
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; }
+    .faq-left h2 { font-size: clamp(22px, 3vw, 32px); margin-bottom: 12px; }
+    .faq-left p { font-size: 13px; color: var(--secondary); line-height: 1.6; }
+
+    details {
+      border-bottom: 1px solid var(--border);
+    }
+    details:first-of-type { border-top: 1px solid var(--border); }
+    summary {
+      font-size: 14px; font-weight: 600; color: var(--ink);
+      padding: 18px 0; cursor: pointer; list-style: none;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: color 0.15s;
+    }
+    summary:hover { color: var(--ink); }
+    summary::after {
+      content: '+'; font-size: 18px; font-weight: 300;
+      color: var(--muted); flex-shrink: 0; margin-left: 16px;
+    }
+    details[open] summary::after { content: '−'; }
+    details p {
+      font-size: 13px; color: var(--secondary); line-height: 1.7;
+      padding-bottom: 18px;
+    }
+
+    /* ── Footer ── */
+    footer { background: var(--ink); color: #fff; padding: 64px var(--pad) 32px; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-logo { font-family: 'Prata', serif; font-size: 22px; margin-bottom: 14px; }
+    .footer-logo span { color: var(--muted); }
+    .footer-desc { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.5); max-width: 280px; }
+    .footer-col-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: rgba(255,255,255,0.35);
+      margin-bottom: 18px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.55); transition: color 0.15s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-contact { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.8; }
+    .footer-contact a { color: rgba(255,255,255,0.55); }
+    .footer-contact a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+    /* ── Sticky CTA bar ── */
+    .sticky-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+      background: var(--ink); color: #fff;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--pad); height: 52px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .sticky-bar.visible { transform: translateY(0); }
+    .sticky-bar-text { font-size: 13px; color: rgba(255,255,255,0.75); }
+    .sticky-bar-right { display: flex; align-items: center; gap: 16px; }
+    .sticky-bar-cta {
+      background: #fff; color: var(--ink); border: none;
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 9px 20px; transition: background 0.15s;
+    }
+    .sticky-bar-cta:hover { background: #e8e2da; }
+    .sticky-bar-dismiss {
+      background: none; border: none; color: rgba(255,255,255,0.4);
+      font-size: 18px; line-height: 1; padding: 4px;
+      transition: color 0.15s;
+    }
+    .sticky-bar-dismiss:hover { color: #fff; }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(26,26,26,0.7); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: #fff; max-width: 520px; width: 100%;
+      padding: 40px; position: relative;
+      transform: translateY(16px); transition: transform 0.2s;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px;
+      background: none; border: none; font-size: 20px;
+      color: var(--muted); transition: color 0.15s;
+    }
+    .modal-close:hover { color: var(--ink); }
+    .modal h3 { font-family: 'Prata', serif; font-size: 22px; margin-bottom: 6px; }
+    .modal-sub { font-size: 13px; color: var(--secondary); margin-bottom: 28px; }
+    .modal-form { display: flex; flex-direction: column; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-field { display: flex; flex-direction: column; gap: 5px; }
+    .form-field label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+    .form-field input,
+    .form-field select {
+      border: 1px solid var(--border); background: #fff;
+      font-family: 'Inter', sans-serif; font-size: 13px; color: var(--ink);
+      padding: 11px 14px; outline: none; transition: border-color 0.15s;
+      appearance: none;
+    }
+    .form-field input:focus,
+    .form-field select:focus { border-color: var(--ink); }
+    .form-field input::placeholder { color: var(--muted); }
+    .form-field.full { grid-column: 1 / -1; }
+    .modal-submit {
+      width: 100%; background: var(--accent); color: #fff; border: none;
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 15px; margin-top: 6px; transition: background 0.15s;
+    }
+    .modal-submit:hover { background: var(--accent-h); }
+    .modal-privacy { font-size: 11px; color: var(--muted); text-align: center; margin-top: 10px; }
+
+    .modal-success { display: none; text-align: center; padding: 20px 0; }
+    .modal-success.show { display: block; }
+    .modal-success-icon {
+      width: 48px; height: 48px; border-radius: 50%; background: #f0f7f0;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .modal-success h3 { font-family: 'Prata', serif; font-size: 22px; margin-bottom: 8px; }
+    .modal-success p { font-size: 13px; color: var(--secondary); line-height: 1.6; margin-bottom: 20px; }
+    .modal-success a { color: var(--ink); border-bottom: 1px solid var(--border); }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .listings-grid { grid-template-columns: repeat(2, 1fr); }
+      .regions-panel { grid-template-columns: repeat(3, 1fr); }
+      .regions-panel .region-item:nth-child(3) { border-right: none; }
+      .how-inner { grid-template-columns: 1fr; gap: 32px; }
+      .how-step { border-right: none; margin-right: 0; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 24px; }
+      .how-step:last-child { border-bottom: none; }
+      .value-inner { grid-template-columns: 1fr; gap: 40px; }
+      .faq-inner { grid-template-columns: 1fr; gap: 32px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .capture-strip { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 640px) {
+      :root { --pad: 20px; }
+      .listings-grid { grid-template-columns: 1fr; }
+      .regions-panel { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .trust-strip { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .trust-item { border-right: none; margin-right: 0; }
+      .sticky-bar-text { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <a href="/" class="nav-logo">Portugal Real Estate<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="/listings">Listings</a></li>
+      <li><a href="/region/lisbon">Lisbon</a></li>
+      <li><a href="/region/algarve">Algarve</a></li>
+      <li><a href="/region/porto">Porto</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-eyebrow">Free agent matching for international buyers</div>
+    <h1>Find Property in Portugal</h1>
+    <p class="hero-sub">Tell us what you are looking for and we will connect you with a vetted, English-speaking Portuguese agent who knows your target area. No fees, no obligations.</p>
+
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <a href="/listings" class="btn btn-primary" style="padding: 13px 26px; font-size: 12px;">Browse Properties &rarr;</a>
+      <button onclick="openModal('')" class="btn btn-ghost" style="padding: 13px 26px; font-size: 12px;">Connect Me to an Agent</button>
+    </div>
+  </section>
+
+  <!-- ── How It Works ── -->
+  <div class="how-section">
+    <div class="how-inner">
+      <div class="how-step">
+        <div class="how-num">01</div>
+        <div class="how-title">Tell us what you want</div>
+        <div class="how-body">Share your budget, preferred region, and property type. Takes under two minutes.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">02</div>
+        <div class="how-title">We match you with a specialist</div>
+        <div class="how-body">We connect you with a licensed agent who specialises in your exact area and speaks your language.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">03</div>
+        <div class="how-title">Your agent handles everything</div>
+        <div class="how-body">From shortlist to signed deed. Viewings, negotiation, legal guidance, and post-sale support.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Listings ── -->
+  <section class="listings-section">
+    <div class="listings-header">
+      <div>
+        <div class="section-label">Active listings</div>
+        <h2>Properties for Sale in Portugal</h2>
+      </div>
+      <a href="/listings">Browse all listings &rarr;</a>
+    </div>
+
+    <div class="listings-grid">
+
+      <!-- Card 1 -->
+      <article class="listing-card">
+        <div class="card-img tone-1">
+          <div class="card-tag tag-new">New</div>
+          <div class="card-img-inner">
+            <svg class="card-img-svg" viewBox="0 0 48 48" fill="none"><rect x="8" y="20" width="16" height="28" fill="#1a1a1a"/><rect x="26" y="14" width="14" height="34" fill="#1a1a1a"/><polygon points="24,4 40,18 8,18" fill="#1a1a1a"/><rect x="11" y="24" width="4" height="5" fill="#f7f3ee"/><rect x="18" y="24" width="4" height="5" fill="#f7f3ee"/><rect x="29" y="18" width="4" height="5" fill="#f7f3ee"/><rect x="36" y="18" width="4" height="5" fill="#f7f3ee"/></svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-type">Apartment</div>
+          <div class="card-title">2 Bed Apartment, Chiado</div>
+          <div class="card-location">Lisbon, Portugal</div>
+          <div class="card-divider"></div>
+          <div class="card-meta">
+            <div class="card-price">€485,000</div>
+            <div class="card-specs"><div class="card-spec">2 bed</div><div class="card-spec">85 m²</div></div>
+          </div>
+          <button class="card-enquire" onclick="openModal('Chiado, Lisbon')">Enquire about this property</button>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="listing-card">
+        <div class="card-img tone-2">
+          <div class="card-tag">For Sale</div>
+          <div class="card-img-inner">
+            <svg class="card-img-svg" viewBox="0 0 48 48" fill="none"><rect x="12" y="18" width="24" height="30" fill="#1a1a1a"/><polygon points="24,4 40,20 8,20" fill="#1a1a1a"/><rect x="16" y="24" width="5" height="6" fill="#f7f3ee"/><rect x="27" y="24" width="5" height="6" fill="#f7f3ee"/><rect x="19" y="35" width="10" height="13" fill="#f7f3ee"/></svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-type">Studio</div>
+          <div class="card-title">Studio, Ribeira District</div>
+          <div class="card-location">Porto, Portugal</div>
+          <div class="card-divider"></div>
+          <div class="card-meta">
+            <div class="card-price">€195,000</div>
+            <div class="card-specs"><div class="card-spec">Studio</div><div class="card-spec">42 m²</div></div>
+          </div>
+          <button class="card-enquire" onclick="openModal('Ribeira, Porto')">Enquire about this property</button>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="listing-card">
+        <div class="card-img tone-3">
+          <div class="card-tag tag-new">New</div>
+          <div class="card-img-inner">
+            <svg class="card-img-svg" viewBox="0 0 48 48" fill="none"><rect x="4" y="24" width="40" height="24" fill="#1a1a1a"/><polygon points="24,6 44,26 4,26" fill="#1a1a1a"/><rect x="8" y="28" width="6" height="6" fill="#f7f3ee"/><rect x="18" y="28" width="6" height="6" fill="#f7f3ee"/><rect x="24" y="28" width="6" height="6" fill="#f7f3ee"/><rect x="34" y="28" width="6" height="6" fill="#f7f3ee"/><rect x="18" y="37" width="12" height="11" fill="#f7f3ee"/></svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-type">Villa</div>
+          <div class="card-title">4 Bed Villa, Albufeira</div>
+          <div class="card-location">Algarve, Portugal</div>
+          <div class="card-divider"></div>
+          <div class="card-meta">
+            <div class="card-price">€870,000</div>
+            <div class="card-specs"><div class="card-spec">4 bed</div><div class="card-spec">220 m²</div></div>
+          </div>
+          <button class="card-enquire" onclick="openModal('Albufeira, Algarve')">Enquire about this property</button>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="listing-card">
+        <div class="card-img tone-4">
+          <div class="card-tag">For Sale</div>
+          <div class="card-img-inner">
+            <svg class="card-img-svg" viewBox="0 0 48 48" fill="none"><rect x="6" y="22" width="14" height="26" fill="#1a1a1a"/><rect x="22" y="16" width="20" height="32" fill="#1a1a1a"/><polygon points="32,4 46,18 18,18" fill="#1a1a1a"/><rect x="9" y="27" width="5" height="6" fill="#f7f3ee"/><rect x="25" y="22" width="5" height="6" fill="#f7f3ee"/><rect x="34" y="22" width="5" height="6" fill="#f7f3ee"/><rect x="25" y="33" width="5" height="6" fill="#f7f3ee"/><rect x="34" y="33" width="5" height="6" fill="#f7f3ee"/></svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-type">Townhouse</div>
+          <div class="card-title">Historic Townhouse, Alfama</div>
+          <div class="card-location">Lisbon, Portugal</div>
+          <div class="card-divider"></div>
+          <div class="card-meta">
+            <div class="card-price">€620,000</div>
+            <div class="card-specs"><div class="card-spec">3 bed</div><div class="card-spec">140 m²</div></div>
+          </div>
+          <button class="card-enquire" onclick="openModal('Alfama, Lisbon')">Enquire about this property</button>
+        </div>
+      </article>
+
+      <!-- Mid-grid capture strip -->
+      <div class="capture-strip">
+        <div class="capture-strip-text">
+          <h3>Not finding what you need?</h3>
+          <p>Tell us your criteria and we will find matching properties you will not see on public portals.</p>
+        </div>
+        <form class="capture-strip-form" onsubmit="handleCaptureStrip(event)">
+          <input type="email" placeholder="Your email address" required />
+          <button type="submit">Get a Free Shortlist</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Regions ── -->
+  <section class="regions-section">
+    <div class="regions-header">
+      <div class="section-label">Browse by location</div>
+      <h2>Where in Portugal?</h2>
+    </div>
+    <div class="regions-panel">
+      <div class="region-item" onclick="openModal('Lisbon')">
+        <div class="region-number">01</div>
+        <div class="region-name">Lisbon</div>
+        <div class="region-tag">Capital City</div>
+        <div class="region-count"><span>342</span> properties</div>
+      </div>
+      <div class="region-item" onclick="openModal('Porto')">
+        <div class="region-number">02</div>
+        <div class="region-name">Porto</div>
+        <div class="region-tag">Northern City</div>
+        <div class="region-count"><span>218</span> properties</div>
+      </div>
+      <div class="region-item" onclick="openModal('Algarve')">
+        <div class="region-number">03</div>
+        <div class="region-name">Algarve</div>
+        <div class="region-tag">Southern Coast</div>
+        <div class="region-count"><span>491</span> properties</div>
+      </div>
+      <div class="region-item" onclick="openModal('Silver Coast')">
+        <div class="region-number">04</div>
+        <div class="region-name">Silver Coast</div>
+        <div class="region-tag">Atlantic Villages</div>
+        <div class="region-count"><span>156</span> properties</div>
+      </div>
+      <div class="region-item" onclick="openModal('Alentejo')">
+        <div class="region-number">05</div>
+        <div class="region-name">Alentejo</div>
+        <div class="region-tag">Wine Country</div>
+        <div class="region-count"><span>89</span> properties</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Value Props ── -->
+  <section class="value-section">
+    <div class="value-inner">
+      <div class="value-left">
+        <div class="section-label">Why buying in Portugal</div>
+        <h2>The right market.<br>The right guidance.</h2>
+        <p>Portugal offers some of the most compelling buying conditions in Europe: stable legal framework, no restrictions on foreign buyers, competitive prices relative to Western Europe, and a quality of life that is hard to match. Having a specialist agent who knows your target area makes the difference between a great deal and a costly one.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
+          <a href="/listings" class="btn btn-primary">Browse Properties &rarr;</a>
+          <button onclick="openModal('')" class="btn btn-ghost">Connect Me to an Agent</button>
+        </div>
+      </div>
+      <div class="value-props">
+        <div class="value-prop">
+          <div class="value-prop-title">No buyer fees, ever</div>
+          <div class="value-prop-body">This service costs buyers nothing. You get matched with a qualified local agent at zero cost, with no obligation to proceed.</div>
+        </div>
+        <div class="value-prop">
+          <div class="value-prop-title">Vetted local agents, not a listings portal</div>
+          <div class="value-prop-body">We connect you directly with a licensed Portuguese agent who specialises in your target region. Not a generic database. Not an algorithm.</div>
+        </div>
+        <div class="value-prop">
+          <div class="value-prop-title">One form, the right expert for your search</div>
+          <div class="value-prop-body">Whether you are buying in Lisbon, the Algarve, or a quiet Silver Coast village, we match you with a specialist who knows that market deeply.</div>
+        </div>
+        <div class="value-prop">
+          <div class="value-prop-title">47 buyers matched this month</div>
+          <div class="value-prop-body">Portugal's popular listings go under offer within 2 to 4 weeks of listing. Most buyers we match hear from their agent the same day they enquire.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="faq-section">
+    <div class="faq-inner">
+      <div class="faq-left">
+        <div class="section-label">Common questions</div>
+        <h2>Buying property in Portugal as a foreigner</h2>
+        <p style="margin-top:12px;">Everything you need to know before you start your search. More detailed guidance available from your matched agent.</p>
+      </div>
+      <div>
+        <details open>
+          <summary>Can foreigners buy property in Portugal?</summary>
+          <p>Yes. Portugal places no restrictions on foreign nationals purchasing property. Non-EU and EU citizens alike can buy freely following the same legal steps as Portuguese nationals: promissory contract, fiscal number (NIF), and final deed at a notary. A local solicitor is strongly recommended to handle due diligence.</p>
+        </details>
+        <details>
+          <summary>What are the costs of buying property in Portugal?</summary>
+          <p>Budget for 6 to 8 percent of the purchase price in transaction costs. This covers IMT transfer tax (0 to 8 percent depending on value), stamp duty at 0.8 percent, notary and land registry fees, and legal fees of 1 to 2 percent. Our agent matching service costs buyers nothing.</p>
+        </details>
+        <details>
+          <summary>What is the Portugal NHR tax regime?</summary>
+          <p>Non-Habitual Resident status offers qualifying new tax residents a flat 20 percent rate on Portuguese-source income and potential exemptions on foreign-source income for 10 years. You qualify by not having been a Portuguese tax resident in the previous 5 years. The scheme was revised in 2024 under the IFICI framework.</p>
+        </details>
+        <details>
+          <summary>What are the best areas to buy property in Portugal?</summary>
+          <p>Lisbon offers the most liquid market with strong capital appreciation. The Algarve suits buyers prioritising lifestyle and rental yield. Porto delivers strong short-term rental returns at lower entry prices. The Silver Coast and Alentejo offer authentic Portugal at 40 to 60 percent below Lisbon prices.</p>
+        </details>
+        <details>
+          <summary>Is Portugal real estate a good investment in 2025?</summary>
+          <p>Portugal has seen consistent price growth averaging 7 to 10 percent annually in prime urban markets since 2017. Gross rental yields in Lisbon range from 3 to 5 percent, higher in Porto and the Algarve. Strong tourism demand and limited housing supply continue to support the market.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer id="contact">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Portugal Real Estate<span>.</span></div>
+        <p class="footer-desc">Free agent matching for international buyers of Portuguese property. Lisbon, Porto, Algarve, Silver Coast, and Alentejo.</p>
+      </div>
+      <div>
+        <div class="footer-col-label">Browse</div>
+        <ul class="footer-links">
+          <li><a href="/listings">All listings</a></li>
+          <li><a href="/region/lisbon">Lisbon</a></li>
+          <li><a href="/region/porto">Porto</a></li>
+          <li><a href="/region/algarve">Algarve</a></li>
+          <li><a href="/region/silver-coast">Silver Coast</a></li>
+          <li><a href="/region/alentejo">Alentejo</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Contact</div>
+        <div class="footer-contact">
+          <a href="mailto:hello@portugalrealestateforsale.com">hello@portugalrealestateforsale.com</a><br><br>
+          Questions about buying in Portugal? <a href="#" onclick="openModal(''); return false;" style="text-decoration:underline">Talk to us</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2025 Portugal Real Estate for Sale. All rights reserved.</span>
+      <span class="footer-copy">Property listings in Portugal for international buyers.</span>
+    </div>
+  </footer>
+
+  <!-- ── Sticky bar ── -->
+  <div class="sticky-bar" id="stickyBar">
+    <span class="sticky-bar-text">Free agent matching for Portugal property buyers</span>
+    <div class="sticky-bar-right">
+      <button class="sticky-bar-cta" onclick="openModal('')">Connect Me to an Agent &rarr;</button>
+      <button class="sticky-bar-dismiss" onclick="dismissBar()" aria-label="Dismiss">&times;</button>
+    </div>
+  </div>
+
+  <!-- ── Lead Modal ── -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+
+      <div id="modalForm">
+        <h3>Tell us what you are looking for</h3>
+        <p class="modal-sub">We will match you with a specialist agent in your target area within 24 hours. Free for buyers, always.</p>
+        <form class="modal-form" onsubmit="submitLead(event)">
+          <div class="form-row">
+            <div class="form-field">
+              <label>First name</label>
+              <input type="text" placeholder="Your name" required />
+            </div>
+            <div class="form-field">
+              <label>WhatsApp or phone <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+              <input type="tel" placeholder="+44 7700 000000" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Region of interest</label>
+              <select id="modalRegion">
+                <option value="">Select a region</option>
+                <option>Lisbon</option>
+                <option>Porto</option>
+                <option>Algarve</option>
+                <option>Silver Coast</option>
+                <option>Alentejo</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Property type</label>
+              <select>
+                <option value="">Any type</option>
+                <option>Apartment</option>
+                <option>Villa</option>
+                <option>Townhouse</option>
+                <option>Farmhouse</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Budget range</label>
+              <select>
+                <option value="">Select budget</option>
+                <option>Under €250,000</option>
+                <option>€250,000 to €500,000</option>
+                <option>€500,000 to €1,000,000</option>
+                <option>Over €1,000,000</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>When to buy</label>
+              <select>
+                <option value="">Select timeline</option>
+                <option>Within 3 months</option>
+                <option>3 to 6 months</option>
+                <option>6 to 12 months</option>
+                <option>Just researching</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="modal-submit">Connect Me With an Agent</button>
+          <p class="modal-privacy">We share your details only with your matched agent. No spam, no cold calls from us.</p>
+        </form>
+      </div>
+
+      <div class="modal-success" id="modalSuccess">
+        <div class="modal-success-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="#2d7a2d" stroke-width="1.5"/><path d="M6.5 11l3 3 6-6" stroke="#2d7a2d" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>You are matched.</h3>
+        <p>We have sent your details to a specialist agent in <strong id="successRegion">your selected region</strong>. Most buyers hear back within a few hours during business days. Check your inbox for a confirmation.</p>
+        <a href="/listings" onclick="closeModal()">Browse properties while you wait &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sticky bar on scroll
+    var barDismissed = false;
+    var heroBottom = 0;
+    function updateHeroBottom() {
+      var hero = document.querySelector('.hero');
+      if (hero) heroBottom = hero.getBoundingClientRect().bottom + window.scrollY;
+    }
+    updateHeroBottom();
+    window.addEventListener('scroll', function() {
+      if (barDismissed) return;
+      var bar = document.getElementById('stickyBar');
+      if (window.scrollY > heroBottom - 100) {
+        bar.classList.add('visible');
+      } else {
+        bar.classList.remove('visible');
+      }
+    });
+    function dismissBar() {
+      barDismissed = true;
+      document.getElementById('stickyBar').classList.remove('visible');
+    }
+
+    // Modal
+    function openModal(region) {
+      var overlay = document.getElementById('modalOverlay');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      if (region) {
+        var sel = document.getElementById('modalRegion');
+        for (var i = 0; i < sel.options.length; i++) {
+          if (sel.options[i].text === region || region.indexOf(sel.options[i].text) > -1) {
+            sel.value = sel.options[i].value || sel.options[i].text;
+            break;
+          }
+        }
+      }
+    }
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // Hero step 1: email submit opens modal
+    document.getElementById('heroForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      openModal('');
+    });
+
+    // Capture strip
+    function handleCaptureStrip(e) {
+      e.preventDefault();
+      openModal('');
+    }
+
+    // Lead form submit
+    function submitLead(e) {
+      e.preventDefault();
+      var regionSel = document.getElementById('modalRegion');
+      var region = regionSel.options[regionSel.selectedIndex].text || 'your selected region';
+      document.getElementById('successRegion').textContent = region;
+      document.getElementById('modalForm').style.display = 'none';
+      document.getElementById('modalSuccess').classList.add('show');
+    }
+  </script>
+
+</body>
+</html>

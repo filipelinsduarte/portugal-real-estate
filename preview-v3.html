@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portugal Real Estate for Sale — V3 Sand Bold</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prata&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Design Tokens ── */
+    :root {
+      --hero-bg:      #2a2118;
+      --section-sand: #ede8df;
+      --page-bg:      #faf7f3;
+      --card-bg:      #ffffff;
+      --accent:       #b85520;
+      --accent-hover: #a04a1c;
+      --ink:          #1c1c1c;
+      --secondary:    #555555;
+      --muted:        #8f8f8f;
+      --border:       #d6cfc4;
+      --dark-bg:      #2a2118;
+      --footer-bg:    #2a2118;
+      --nav-h:        66px;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--page-bg);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .prata { font-family: 'Prata', serif; font-weight: 400; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #ffffff;
+      height: var(--nav-h);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 5vw;
+      gap: 0;
+    }
+    .nav-logo {
+      font-family: 'Prata', serif;
+      font-size: 17px;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      flex: 0 0 auto;
+      margin-right: auto;
+    }
+    .nav-logo span {
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      list-style: none;
+      margin-right: 28px;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--secondary);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 9px 20px;
+      border-radius: 100px;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--accent-hover); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--dark-bg);
+      padding: 96px 5vw 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(184,85,32,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(255,255,255,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-family: 'Prata', serif;
+      font-size: clamp(40px, 6vw, 68px);
+      color: #ffffff;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      max-width: 840px;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.52);
+      max-width: 480px;
+      line-height: 1.65;
+      margin-bottom: 44px;
+      font-weight: 300;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-ghost-dark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: rgba(255,255,255,0.75);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 14px 28px;
+      border: 1px solid rgba(255,255,255,0.22);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-ghost-dark:hover {
+      border-color: rgba(255,255,255,0.55);
+      color: #fff;
+    }
+    .hero-search {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      width: 100%;
+      max-width: 520px;
+    }
+    .hero-search input {
+      flex: 1;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-right: none;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      padding: 13px 18px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .hero-search input::placeholder { color: rgba(255,255,255,0.38); }
+    .hero-search input:focus { border-color: rgba(255,255,255,0.5); }
+    .hero-search button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 13px 22px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .hero-search button:hover { background: var(--accent-hover); }
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 52px;
+      flex-wrap: wrap;
+    }
+    .hero-stat-value {
+      font-family: 'Prata', serif;
+      font-size: 28px;
+      color: #fff;
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 5px;
+    }
+
+    /* ── CURRENTLY LISTED STRIP ── */
+    .listed-strip {
+      background: var(--section-sand);
+      padding: 64px 0;
+      overflow: hidden;
+    }
+    .listed-strip-header {
+      padding: 0 5vw 36px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .strip-title {
+      font-family: 'Prata', serif;
+      font-size: clamp(22px, 3vw, 30px);
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .strip-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 1px;
+      transition: opacity 0.15s;
+    }
+    .strip-link:hover { opacity: 0.75; }
+    .cards-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      padding: 0 5vw;
+      background: var(--border);
+    }
+    .property-card {
+      background: var(--card-bg);
+      border-radius: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-image {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      background: #e0d9d0;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-image-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #d4ccc0 0%, #c8bfb1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-image-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(184,85,32,0.08) 0%, transparent 60%);
+    }
+    .card-image-placeholder svg {
+      opacity: 0.22;
+    }
+    .card-body {
+      padding: 20px 22px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .card-title {
+      font-family: 'Prata', serif;
+      font-size: 16px;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .card-location {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .card-price {
+      font-family: 'Prata', serif;
+      font-size: 20px;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin-top: auto;
+    }
+    .card-meta {
+      display: flex;
+      gap: 14px;
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .card-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Placeholder image illustrations */
+    .ph-lisboa {
+      background: linear-gradient(160deg, #c4bdb4 0%, #b8a99a 50%, #c9bdb1 100%);
+    }
+    .ph-algarve {
+      background: linear-gradient(160deg, #ccc4b8 0%, #b5a898 50%, #c8bfb4 100%);
+    }
+    .ph-alentejo {
+      background: linear-gradient(160deg, #bfb8ae 0%, #b0a898 50%, #c0b8ae 100%);
+    }
+    .ph-obidos {
+      background: linear-gradient(160deg, #c8c1b8 0%, #b8b0a4 50%, #c4bcb0 100%);
+    }
+
+    /* ── EDITORIAL FEATURED ── */
+    .editorial {
+      background: var(--page-bg);
+      padding: 96px 5vw;
+    }
+    .editorial-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .editorial-left {}
+    .editorial-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .editorial-eyebrow::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .editorial-left h2 {
+      font-family: 'Prata', serif;
+      font-size: clamp(30px, 3.5vw, 46px);
+      color: var(--ink);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .editorial-left p {
+      font-size: 15px;
+      color: var(--secondary);
+      line-height: 1.75;
+      margin-bottom: 32px;
+      max-width: 380px;
+    }
+    .editorial-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 2px;
+      transition: opacity 0.15s;
+    }
+    .editorial-link:hover { opacity: 0.75; }
+    .editorial-highlight {
+      background: var(--section-sand);
+      border-left: 3px solid var(--accent);
+      padding: 22px 24px;
+      margin-top: 40px;
+      font-size: 14px;
+      color: var(--secondary);
+      font-style: italic;
+      line-height: 1.65;
+    }
+    .editorial-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+    }
+    .editorial-card {
+      background: var(--card-bg);
+      display: flex;
+      gap: 0;
+      overflow: hidden;
+    }
+    .editorial-card-image {
+      width: 130px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #d4ccc0 0%, #bdb4a8 100%);
+      min-height: 140px;
+      position: relative;
+    }
+    .editorial-card-image.ph2 {
+      background: linear-gradient(135deg, #ccc4b8 0%, #b4aa9c 100%);
+    }
+    .editorial-card-body {
+      padding: 22px 24px;
+      flex: 1;
+    }
+    .editorial-card-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 7px;
+    }
+    .editorial-card-title {
+      font-family: 'Prata', serif;
+      font-size: 17px;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+    .editorial-card-loc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .editorial-card-price {
+      font-family: 'Prata', serif;
+      font-size: 22px;
+      color: var(--ink);
+    }
+    .editorial-card-btn {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 1px;
+    }
+
+    /* ── REGIONS ── */
+    .regions {
+      background: var(--page-bg);
+      padding: 0 5vw 80px;
+    }
+    .regions-header {
+      padding: 80px 0 0;
+      margin-bottom: 0;
+      border-top: 1px solid var(--border);
+    }
+    .regions-header h2 {
+      font-family: 'Prata', serif;
+      font-size: clamp(26px, 3vw, 36px);
+      color: var(--ink);
+      letter-spacing: -0.015em;
+      margin-bottom: 8px;
+    }
+    .regions-header p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 48px;
+    }
+    .region-row {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+    }
+    .region-row:first-of-type { border-top: 1px solid var(--border); }
+    .region-name {
+      font-family: 'Prata', serif;
+      font-size: 22px;
+      color: var(--ink);
+      flex: 0 0 220px;
+      letter-spacing: -0.01em;
+    }
+    .region-tagline {
+      flex: 1;
+      font-size: 14px;
+      color: var(--secondary);
+      font-weight: 300;
+    }
+    .region-count {
+      font-size: 12px;
+      color: var(--muted);
+      flex: 0 0 80px;
+      text-align: center;
+    }
+    .region-link {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      flex: 0 0 auto;
+      opacity: 0.9;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+    .region-link:hover { opacity: 1; }
+
+    /* ── QUOTE SECTION ── */
+    .quote-section {
+      background: var(--dark-bg);
+      padding: 96px 5vw;
+      position: relative;
+      overflow: hidden;
+    }
+    .quote-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 100% at 50% 50%, rgba(184,85,32,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .quote-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+    .quote-mark {
+      font-family: 'Prata', serif;
+      font-size: 80px;
+      color: var(--accent);
+      line-height: 0.5;
+      margin-bottom: 24px;
+      display: block;
+      opacity: 0.55;
+    }
+    .quote-text {
+      font-family: 'Prata', serif;
+      font-size: clamp(22px, 3vw, 36px);
+      color: #ffffff;
+      line-height: 1.45;
+      font-style: italic;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+    .quote-attr {
+      font-size: 12px;
+      color: rgba(255,255,255,0.38);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .quote-divider {
+      width: 48px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.6;
+      margin: 20px auto 20px;
+    }
+    .quote-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 40px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 13px 26px;
+      transition: background 0.15s;
+    }
+    .quote-cta:hover { background: var(--accent-hover); }
+
+    /* ── SERVICES STRIP ── */
+    .services {
+      background: var(--section-sand);
+      padding: 72px 5vw;
+      border-top: 1px solid var(--border);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin-top: 48px;
+    }
+    .service-item {
+      background: var(--section-sand);
+      padding: 36px 32px;
+    }
+    .service-num {
+      font-family: 'Prata', serif;
+      font-size: 36px;
+      color: var(--accent);
+      opacity: 0.4;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .service-title {
+      font-family: 'Prata', serif;
+      font-size: 20px;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .service-desc {
+      font-size: 13px;
+      color: var(--secondary);
+      line-height: 1.7;
+    }
+    .services h2 {
+      font-family: 'Prata', serif;
+      font-size: clamp(26px, 3vw, 38px);
+      color: var(--ink);
+      letter-spacing: -0.015em;
+    }
+    .services-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--footer-bg);
+      color: rgba(255,255,255,0.65);
+      padding: 72px 5vw 40px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand .footer-logo {
+      font-family: 'Prata', serif;
+      font-size: 18px;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .footer-brand .footer-logo span { color: var(--accent); }
+    .footer-brand p {
+      font-size: 13px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.45);
+      max-width: 240px;
+      margin-bottom: 24px;
+    }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+    }
+    .footer-social a {
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.5);
+      font-size: 12px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .footer-social a:hover {
+      border-color: rgba(255,255,255,0.4);
+      color: #fff;
+    }
+    .footer-col-title {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.85); }
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+    .footer-bottom-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-bottom-links a {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      transition: color 0.15s;
+    }
+    .footer-bottom-links a:hover { color: rgba(255,255,255,0.55); }
+
+    /* ── SVG PLACEHOLDER ICON ── */
+    .ph-icon {
+      width: 48px;
+      height: 48px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* ── Responsive tweaks ── */
+    @media (max-width: 900px) {
+      .cards-row { grid-template-columns: repeat(2, 1fr); }
+      .editorial-inner { grid-template-columns: 1fr; gap: 48px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .cards-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .footer-top { grid-template-columns: 1fr; }
+      .region-tagline { display: none; }
+      .region-name { flex: 0 0 160px; }
+      .hero-stats { gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ NAV ═══════ -->
+<nav>
+  <div class="nav-logo prata">Portugal<span>.</span>realestate</div>
+  <ul class="nav-links">
+    <li><a href="#">Buy</a></li>
+    <li><a href="#">Regions</a></li>
+    <li><a href="#">New Developments</a></li>
+    <li><a href="#">Agents</a></li>
+    <li><a href="#">Journal</a></li>
+  </ul>
+  <a href="#" class="nav-cta">List a Property</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════ HERO ═══════ -->
+<section class="hero">
+  <div class="hero-eyebrow">Curated Luxury Real Estate</div>
+  <h1 class="prata">Find your<br>place in Portugal.</h1>
+  <p class="hero-sub">From Lisbon's azulejo-tiled apartments to sun-bleached Alentejo farmhouses. Exceptional properties, personally vetted.</p>
+  <div class="hero-actions">
+    <a href="#" class="btn-primary">
+      Browse All Listings
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="#" class="btn-ghost-dark">
+      Meet our Agents
+    </a>
+  </div>
+  <div class="hero-search">
+    <input type="text" placeholder="Search by city, region or property type…" />
+    <button>Search</button>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-value prata">340+</div>
+      <div class="hero-stat-label">Active Listings</div>
+    </div>
+    <div>
+      <div class="hero-stat-value prata">18</div>
+      <div class="hero-stat-label">Regions Covered</div>
+    </div>
+    <div>
+      <div class="hero-stat-value prata">€265k</div>
+      <div class="hero-stat-label">Lowest Listed</div>
+    </div>
+    <div>
+      <div class="hero-stat-value prata">€9.8M</div>
+      <div class="hero-stat-label">Highest Listed</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ LISTED STRIP ═══ -->
+<section class="listed-strip">
+  <div class="listed-strip-header">
+    <h2 class="strip-title prata">Currently Listed</h2>
+    <a href="#" class="strip-link">View all 340 properties</a>
+  </div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <article class="property-card">
+      <div class="card-image-placeholder ph-lisboa">
+        <svg class="ph-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="20" width="32" height="22" rx="0" stroke="#1c1c1c" stroke-width="2"/>
+          <path d="M4 22L24 6l20 16" stroke="#1c1c1c" stroke-width="2" stroke-linecap="round"/>
+          <rect x="19" y="30" width="10" height="12" stroke="#1c1c1c" stroke-width="1.5"/>
+          <rect x="12" y="25" width="7" height="6" stroke="#1c1c1c" stroke-width="1.5"/>
+          <rect x="29" y="25" width="7" height="6" stroke="#1c1c1c" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Apartment</div>
+        <div class="card-title prata">T4 Apartment, Avenidas Novas</div>
+        <div class="card-location">Lisboa, Lisbon District</div>
+        <div class="card-price prata">€2,425,000</div>
+        <div class="card-meta">
+          <span>4 bed</span>
+          <span>3 bath</span>
+          <span>210 m²</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card 2 -->
+    <article class="property-card">
+      <div class="card-image-placeholder ph-algarve">
+        <svg class="ph-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="18" width="36" height="24" rx="0" stroke="#1c1c1c" stroke-width="2"/>
+          <path d="M2 20L24 4l22 16" stroke="#1c1c1c" stroke-width="2" stroke-linecap="round"/>
+          <rect x="18" y="30" width="12" height="12" stroke="#1c1c1c" stroke-width="1.5"/>
+          <rect x="10" y="24" width="6" height="7" stroke="#1c1c1c" stroke-width="1.5"/>
+          <rect x="32" y="24" width="6" height="7" stroke="#1c1c1c" stroke-width="1.5"/>
+          <path d="M14 42c0-4 4-8 10-8s10 4 10 8" stroke="#1c1c1c" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Villa</div>
+        <div class="card-title prata">Villa, Albufeira</div>
+        <div class="card-location">Algarve, Faro District</div>
+        <div class="card-price prata">€870,000</div>
+        <div class="card-meta">
+          <span>5 bed</span>
+          <span>4 bath</span>
+          <span>380 m²</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card 3 -->
+    <article class="property-card">
+      <div class="card-image-placeholder ph-alentejo">
+        <svg class="ph-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="22" width="28" height="20" rx="0" stroke="#1c1c1c" stroke-width="2"/>
+          <path d="M6 24L24 10l18 14" stroke="#1c1c1c" stroke-width="2" stroke-linecap="round"/>
+          <rect x="18" y="30" width="12" height="12" stroke="#1c1c1c" stroke-width="1.5"/>
+          <circle cx="38" cy="10" r="5" stroke="#1c1c1c" stroke-width="1.5"/>
+          <path d="M10 34H6M38 34h4" stroke="#1c1c1c" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Farmhouse</div>
+        <div class="card-title prata">Quinta, Évora</div>
+        <div class="card-location">Alentejo, Évora District</div>
+        <div class="card-price prata">€490,000</div>
+        <div class="card-meta">
+          <span>3 bed</span>
+          <span>2 bath</span>
+          <span>180 m²</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card 4 -->
+    <article class="property-card">
+      <div class="card-image-placeholder ph-obidos">
+        <svg class="ph-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="24" width="24" height="18" rx="0" stroke="#1c1c1c" stroke-width="2"/>
+          <path d="M8 26L24 14l16 12" stroke="#1c1c1c" stroke-width="2" stroke-linecap="round"/>
+          <path d="M20 14v-4a4 4 0 018 0v4" stroke="#1c1c1c" stroke-width="1.5"/>
+          <rect x="19" y="32" width="10" height="10" stroke="#1c1c1c" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Cottage</div>
+        <div class="card-title prata">Stone Cottage, Óbidos</div>
+        <div class="card-location">Silver Coast, Leiria District</div>
+        <div class="card-price prata">€265,000</div>
+        <div class="card-meta">
+          <span>2 bed</span>
+          <span>1 bath</span>
+          <span>95 m²</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ EDITORIAL ══════ -->
+<section class="editorial">
+  <div class="editorial-inner">
+
+    <div class="editorial-left">
+      <div class="editorial-eyebrow">Featured Focus</div>
+      <h2 class="prata">Properties<br>in Lisbon</h2>
+      <p>The Portuguese capital rewards those who look deeper. Beyond the celebrated hilltop neighbourhoods lie extraordinary apartments in Avenidas Novas, quiet palaces in Belém, and riverfront residences in Alcântara — many still undiscovered by international buyers.</p>
+      <a href="#" class="editorial-link">
+        Explore Lisbon listings
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="editorial-highlight">
+        "Lisbon's prime residential values have risen 38% since 2020, yet remain 60% below equivalent Paris or Madrid addresses."
+      </div>
+    </div>
+
+    <div class="editorial-right">
+      <div class="editorial-card">
+        <div class="editorial-card-image"></div>
+        <div class="editorial-card-body">
+          <div class="editorial-card-tag">Penthouse</div>
+          <div class="editorial-card-title prata">Príncipe Real Penthouse</div>
+          <div class="editorial-card-loc">Príncipe Real, Lisboa</div>
+          <div class="editorial-card-price prata">€3,200,000</div>
+          <a href="#" class="editorial-card-btn">View property</a>
+        </div>
+      </div>
+      <div class="editorial-card">
+        <div class="editorial-card-image ph2"></div>
+        <div class="editorial-card-body">
+          <div class="editorial-card-tag">Apartment</div>
+          <div class="editorial-card-title prata">Belém Riverside Flat</div>
+          <div class="editorial-card-loc">Belém, Lisboa</div>
+          <div class="editorial-card-price prata">€1,150,000</div>
+          <a href="#" class="editorial-card-btn">View property</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ REGIONS ═══════ -->
+<section class="regions">
+  <div class="regions-header">
+    <h2 class="prata">Browse by Region</h2>
+    <p>Discover Portugal's most sought-after addresses</p>
+  </div>
+
+  <div class="region-row">
+    <div class="region-name prata">Lisbon</div>
+    <div class="region-tagline">Capital grandeur, Atlantic light, riverside living</div>
+    <div class="region-count">128 listings</div>
+    <a href="#" class="region-link">View listings →</a>
+  </div>
+  <div class="region-row">
+    <div class="region-name prata">Algarve</div>
+    <div class="region-tagline">Clifftop villas, golden beaches, Europe's top golf coast</div>
+    <div class="region-count">94 listings</div>
+    <a href="#" class="region-link">View listings →</a>
+  </div>
+  <div class="region-row">
+    <div class="region-name prata">Silver Coast</div>
+    <div class="region-tagline">Medieval walled towns, surf breaks, untouched countryside</div>
+    <div class="region-count">41 listings</div>
+    <a href="#" class="region-link">View listings →</a>
+  </div>
+  <div class="region-row">
+    <div class="region-name prata">Alentejo</div>
+    <div class="region-tagline">Vast plains, cork oaks, Michelin-starred agro-tourism</div>
+    <div class="region-count">33 listings</div>
+    <a href="#" class="region-link">View listings →</a>
+  </div>
+  <div class="region-row">
+    <div class="region-name prata">Porto</div>
+    <div class="region-tagline">Wine country, baroque architecture, northern energy</div>
+    <div class="region-count">29 listings</div>
+    <a href="#" class="region-link">View listings →</a>
+  </div>
+  <div class="region-row">
+    <div class="region-name prata">Douro Valley</div>
+    <div class="region-tagline">UNESCO heritage terraces, quintas, river estates</div>
+    <div class="region-count">15 listings</div>
+    <a href="#" class="region-link">View listings →</a>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════ QUOTE ════════ -->
+<section class="quote-section">
+  <div class="quote-inner">
+    <span class="quote-mark prata">&ldquo;</span>
+    <p class="quote-text prata">Portugal remains one of Europe's most compelling real estate markets — combining heritage, climate, and value in ways no other country quite manages.</p>
+    <div class="quote-divider"></div>
+    <div class="quote-attr">Knight Frank Global Wealth Report, 2024</div>
+    <br />
+    <a href="#" class="quote-cta">
+      Start your search
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ SERVICES ═════ -->
+<section class="services">
+  <h2 class="prata">How we work</h2>
+  <p class="services-sub">A considered process for considered buyers</p>
+  <div class="services-grid">
+    <div class="service-item">
+      <div class="service-num prata">01</div>
+      <div class="service-title prata">Curated Listings</div>
+      <p class="service-desc">Every property is personally assessed before it appears on our platform. No bulk imports, no off-market scraping — only homes we'd consider buying ourselves.</p>
+    </div>
+    <div class="service-item">
+      <div class="service-num prata">02</div>
+      <div class="service-title prata">Bilingual Agents</div>
+      <p class="service-desc">Our resident advisors live in the regions they represent. They know the districts, the notaries, and the nuances that online searches cannot surface.</p>
+    </div>
+    <div class="service-item">
+      <div class="service-num prata">03</div>
+      <div class="service-title prata">End-to-End Support</div>
+      <p class="service-desc">From NIF registration through to title deed signing. We introduce trusted lawyers, tax advisors, and mortgage brokers — and stay involved throughout.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ FOOTER ══════ -->
+<footer>
+  <div class="footer-top">
+
+    <div class="footer-brand">
+      <div class="footer-logo prata">Portugal<span>.</span>realestate</div>
+      <p>The curated guide to buying property in Portugal. Independent, bilingual, trusted since 2018.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="3" stroke="currentColor" stroke-width="1.3"/><circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.3"/><circle cx="10.5" cy="3.5" r="0.7" fill="currentColor"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M4.5 6.5v3M4.5 4.5v.01M6.5 9.5v-2a1.5 1.5 0 013 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </a>
+        <a href="#" aria-label="X / Twitter">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Buy Property</div>
+      <ul class="footer-links">
+        <li><a href="#">Apartments</a></li>
+        <li><a href="#">Villas</a></li>
+        <li><a href="#">Farmhouses</a></li>
+        <li><a href="#">New Developments</a></li>
+        <li><a href="#">Commercial</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Regions</div>
+      <ul class="footer-links">
+        <li><a href="#">Lisbon</a></li>
+        <li><a href="#">Algarve</a></li>
+        <li><a href="#">Silver Coast</a></li>
+        <li><a href="#">Alentejo</a></li>
+        <li><a href="#">Porto & North</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Our Agents</a></li>
+        <li><a href="#">Journal</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">List a Property</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2024 Portugal Real Estate for Sale. All rights reserved.</span>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Cookie Settings</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
