@@ -36,7 +36,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Prata&display=swap"
           rel="stylesheet"
         />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7ZGG3K604" />
@@ -51,7 +51,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-background font-sans">
+      <body className="min-h-screen flex flex-col bg-white font-sans">
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />

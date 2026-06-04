@@ -2,18 +2,189 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-* {
-  box-sizing: border-box;
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 14px;
+    color: #151515;
+    background-color: #ffffff;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Prata', Georgia, serif;
+    font-weight: 400;
+    color: #151515;
+  }
+
+  a {
+    color: #151515;
+    text-decoration: underline;
+    text-decoration-color: #e0e0e0;
+    text-underline-offset: 5px;
+    transition: text-decoration-color 80ms ease;
+  }
+
+  a:hover {
+    text-decoration-color: #151515;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-}
+@layer utilities {
+  .page-px {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #F5F0EB;
-  color: #1a1a1a;
+  @media (max-width: 640px) {
+    .page-px {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  .nav-link {
+    font-size: 14px;
+    font-family: 'Inter', Arial, sans-serif;
+    color: #151515;
+    text-decoration: none;
+    transition: color 80ms ease;
+  }
+
+  .nav-link:hover {
+    color: #006c75;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #151515;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-weight: 400;
+    padding: 10px 20px;
+    border: 1px solid #151515;
+    transition: background 80ms ease;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background: rgba(21,21,21,0.85);
+    text-decoration: none;
+    color: #ffffff;
+  }
+
+  .btn-brand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #006c75;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-weight: 400;
+    padding: 10px 20px;
+    border: 1px solid #006c75;
+    transition: background 80ms ease;
+    text-decoration: none;
+  }
+
+  .btn-brand:hover {
+    background: #19818a;
+    text-decoration: none;
+    color: #ffffff;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    color: #151515;
+    font-size: 14px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-weight: 400;
+    padding: 10px 20px;
+    border: 1px solid #151515;
+    transition: background 80ms ease;
+    text-decoration: none;
+  }
+
+  .btn-ghost:hover {
+    background: #f5f5f5;
+    text-decoration: none;
+  }
+
+  .btn-pill {
+    border-radius: 100px;
+  }
+
+  .card-listing {
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+    background: #ffffff;
+    transition: box-shadow 80ms ease;
+  }
+
+  .card-listing:hover {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.08);
+  }
+
+  .breadcrumb {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #606060;
+    text-decoration: none;
+  }
+
+  .breadcrumb:hover {
+    color: #151515;
+    text-decoration: none;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #adadad;
+  }
+
+  .filter-pill {
+    border-radius: 100px;
+    font-size: 14px;
+    padding: 5px 14px;
+    border: 1px solid #e0e0e0;
+    background: #ffffff;
+    color: #151515;
+    transition: all 80ms ease;
+    cursor: pointer;
+    font-family: 'Inter', Arial, sans-serif;
+    text-decoration: none;
+  }
+
+  .filter-pill:hover {
+    background: #f5f5f5;
+    text-decoration: none;
+    color: #151515;
+  }
+
+  .filter-pill.active {
+    border-color: #151515;
+    text-decoration: none;
+  }
 }

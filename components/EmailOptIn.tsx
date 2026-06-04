@@ -11,7 +11,6 @@ export default function EmailOptIn() {
     e.preventDefault()
     setStatus('loading')
     setErrorMsg('')
-
     try {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
@@ -34,15 +33,15 @@ export default function EmailOptIn() {
 
   if (status === 'success') {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
-        <p className="text-primary font-semibold text-lg">You are on the list.</p>
-        <p className="text-gray-600 text-sm mt-1">We will notify you when new properties are listed.</p>
+      <div className="p-4 text-center" style={{ border: '1px solid #006c75' }}>
+        <p className="text-[14px] font-medium text-[#151515]">You are on the list.</p>
+        <p className="text-[12px] text-[#606060] mt-1">We will notify you when new properties are listed.</p>
       </div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-0 w-full max-w-md">
       <input
         type="email"
         value={email}
@@ -50,17 +49,19 @@ export default function EmailOptIn() {
         placeholder="Your email address"
         required
         maxLength={254}
-        className="flex-1 px-4 py-3 rounded-lg border border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+        className="flex-1 px-4 py-3 text-[14px] text-[#151515] bg-white focus:outline-none"
+        style={{ border: '1px solid #e0e0e0', borderRight: 'none' }}
       />
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="bg-accent text-white font-semibold text-sm px-6 py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-60 whitespace-nowrap"
+        className="btn-primary whitespace-nowrap"
+        style={{ fontSize: '13px', fontWeight: 600, letterSpacing: '0.5px' }}
       >
         {status === 'loading' ? 'Subscribing...' : 'Get Notified'}
       </button>
       {status === 'error' && (
-        <p className="text-red-600 text-sm mt-1 w-full">{errorMsg}</p>
+        <p className="text-[#ec4850] text-[12px] mt-2 w-full">{errorMsg}</p>
       )}
     </form>
   )

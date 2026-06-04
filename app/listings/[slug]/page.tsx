@@ -17,22 +17,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const listing = getListing(slug)
   if (!listing) return {}
-
   const priceFormatted = listing.price.toLocaleString('en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })
   const title = `${listing.title} — ${priceFormatted}`
-  const description = listing.description.slice(0, 160)
-
   return {
     title,
-    description,
-    alternates: {
-      canonical: `https://www.portugalrealestateforsale.com/listings/${slug}`,
-    },
-    openGraph: {
-      title,
-      description,
-      url: `https://www.portugalrealestateforsale.com/listings/${slug}`,
-    },
+    description: listing.description.slice(0, 160),
+    alternates: { canonical: `https://www.portugalrealestateforsale.com/listings/${slug}` },
+    openGraph: { title, description: listing.description.slice(0, 160), url: `https://www.portugalrealestateforsale.com/listings/${slug}` },
   }
 }
 
@@ -46,31 +37,18 @@ function buildSchema(listing: Listing) {
     datePosted: listing.listed_at,
     price: listing.price,
     priceCurrency: listing.currency,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: listing.address,
-      addressLocality: listing.city,
-      addressCountry: 'PT',
-    },
+    address: { '@type': 'PostalAddress', streetAddress: listing.address, addressLocality: listing.city, addressCountry: 'PT' },
     numberOfRooms: listing.bedrooms,
-    floorSize: {
-      '@type': 'QuantitativeValue',
-      value: listing.size_sqm,
-      unitCode: 'MTK',
-    },
+    floorSize: { '@type': 'QuantitativeValue', value: listing.size_sqm, unitCode: 'MTK' },
   }
 }
 
-function formatPrice(price: number): string {
+function formatPrice(price: number) {
   return price.toLocaleString('en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })
 }
 
 const REGION_LABELS: Record<string, string> = {
-  lisbon: 'Lisbon',
-  porto: 'Porto',
-  algarve: 'Algarve',
-  'silver-coast': 'Silver Coast',
-  alentejo: 'Alentejo',
+  lisbon: 'Lisbon', porto: 'Porto', algarve: 'Algarve', 'silver-coast': 'Silver Coast', alentejo: 'Alentejo',
 }
 
 export default async function ListingPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -78,7 +56,6 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
   const listing = getListing(slug)
   if (!listing) notFound()
 
-  const schema = buildSchema(listing)
   const breadcrumb = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -91,83 +68,116 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      <SchemaMarkup schema={schema} />
+      <SchemaMarkup schema={buildSchema(listing)} />
       <SchemaMarkup schema={breadcrumb} />
 
-      <div className="max-w-4xl mx-auto px-4 py-10">
+      <div className="page-px max-w-site mx-auto py-10">
+
         {/* Breadcrumb */}
-        <nav className="text-sm text-gray-500 mb-6">
-          <a href="/" className="hover:text-primary">Home</a>
-          <span className="mx-2">/</span>
-          <a href="/listings" className="hover:text-primary">Listings</a>
-          <span className="mx-2">/</span>
-          <a href={`/region/${listing.region}`} className="hover:text-primary capitalize">{REGION_LABELS[listing.region] ?? listing.region}</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-700">{listing.title}</span>
+        <nav className="flex items-center gap-2 mb-8 flex-wrap">
+          <a href="/" className="breadcrumb">Home</a>
+          <span className="text-[#afafaf] text-[11px]">/</span>
+          <a href="/listings" className="breadcrumb">Listings</a>
+          <span className="text-[#afafaf] text-[11px]">/</span>
+          <a href={`/region/${listing.region}`} className="breadcrumb">{REGION_LABELS[listing.region] ?? listing.region}</a>
+          <span className="text-[#afafaf] text-[11px]">/</span>
+          <span className="breadcrumb text-[#151515]">{listing.neighbourhood}</span>
         </nav>
 
-        {/* Image placeholder */}
-        <div className="w-full h-64 md:h-96 bg-gray-100 rounded-xl flex items-center justify-center mb-8 text-gray-400 text-sm">
-          Photos coming soon
+        {/* Main image */}
+        <div
+          className="w-full bg-[#f5f5f5] flex items-center justify-center text-[#adadad] text-[11px] uppercase tracking-[1px] mb-8"
+          style={{ aspectRatio: '16/7', maxHeight: '520px' }}
+        >
+          {listing.images.length > 0
+            // eslint-disable-next-line @next/next/no-img-element
+            ? <img src={listing.images[0]} alt={listing.title} className="w-full h-full object-cover" />
+            : 'No photos available'}
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-12">
           {/* Main content */}
           <div className="md:col-span-2">
-            <h1 className="text-2xl md:text-3xl font-bold text-primary mb-2">{listing.title}</h1>
-            <p className="text-gray-500 mb-4">{listing.address}</p>
+            <p className="text-[11px] uppercase tracking-[1px] text-[#adadad] mb-2">
+              {REGION_LABELS[listing.region]} · {listing.neighbourhood} · {listing.city}
+            </p>
+            <h1 className="font-serif font-normal text-[32px] text-[#151515] leading-[1.15] mb-3">{listing.title}</h1>
+            <p className="text-[14px] text-[#606060] mb-6">{listing.address}</p>
 
-            <div className="flex flex-wrap gap-4 mb-6 text-sm text-gray-600">
-              {listing.bedrooms > 0 && (
-                <span className="bg-gray-50 border rounded px-3 py-1">{listing.bedrooms} bed{listing.bedrooms !== 1 ? 's' : ''}</span>
-              )}
-              {listing.bedrooms === 0 && (
-                <span className="bg-gray-50 border rounded px-3 py-1">Studio</span>
-              )}
-              <span className="bg-gray-50 border rounded px-3 py-1">{listing.bathrooms} bath{listing.bathrooms !== 1 ? 's' : ''}</span>
-              <span className="bg-gray-50 border rounded px-3 py-1">{listing.size_sqm} m²</span>
-              <span className="bg-gray-50 border rounded px-3 py-1 capitalize">{listing.type}</span>
+            {/* Key stats */}
+            <div className="flex flex-wrap gap-0 mb-8" style={{ border: '1px solid #e0e0e0' }}>
+              {[
+                { label: 'Price', value: formatPrice(listing.price) },
+                { label: 'Size', value: `${listing.size_sqm} m²` },
+                { label: 'Bedrooms', value: listing.bedrooms > 0 ? String(listing.bedrooms) : 'Studio' },
+                { label: 'Bathrooms', value: String(listing.bathrooms) },
+                { label: 'Type', value: listing.type.charAt(0).toUpperCase() + listing.type.slice(1) },
+                ...(listing.floor ? [{ label: 'Floor', value: String(listing.floor) }] : []),
+              ].map((stat, i, arr) => (
+                <div
+                  key={stat.label}
+                  className="flex-1 p-4"
+                  style={{ borderRight: i < arr.length - 1 ? '1px solid #e0e0e0' : 'none', minWidth: '100px' }}
+                >
+                  <p className="text-[11px] uppercase tracking-[1px] text-[#adadad] mb-1">{stat.label}</p>
+                  <p className="text-[15px] font-semibold text-[#151515]">{stat.value}</p>
+                </div>
+              ))}
             </div>
 
-            <h2 className="text-lg font-semibold text-primary mb-2">About this property</h2>
-            <p className="text-gray-700 leading-relaxed mb-6">{listing.description}</p>
+            {/* Description */}
+            <div className="mb-8" style={{ borderTop: '1px solid #e0e0e0', paddingTop: '32px' }}>
+              <h2 className="font-serif font-normal text-[20px] text-[#151515] mb-4">About this property</h2>
+              <p className="text-[14px] text-[#606060] leading-6">{listing.description}</p>
+            </div>
 
-            <h2 className="text-lg font-semibold text-primary mb-2">Features</h2>
-            <ul className="grid grid-cols-2 gap-2 mb-6">
-              {listing.features.map((f) => (
-                <li key={f} className="flex items-center gap-2 text-sm text-gray-700">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
-                  {f}
-                </li>
-              ))}
-            </ul>
+            {/* Features */}
+            {listing.features.length > 0 && (
+              <div style={{ borderTop: '1px solid #e0e0e0', paddingTop: '32px' }}>
+                <h2 className="font-serif font-normal text-[20px] text-[#151515] mb-4">Features</h2>
+                <ul className="grid grid-cols-2 gap-y-2">
+                  {listing.features.map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-[13px] text-[#606060]">
+                      <span className="w-1 h-1 bg-[#006c75] rounded-full flex-shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
 
           {/* Sidebar */}
           <div>
-            <div className="border rounded-xl p-6 sticky top-6">
-              <p className="text-3xl font-bold text-primary mb-1">{formatPrice(listing.price)}</p>
-              <p className="text-sm text-gray-500 mb-6">
-                {listing.size_sqm > 0 ? `${Math.round(listing.price / listing.size_sqm).toLocaleString('en-GB')} €/m²` : ''}
-              </p>
+            <div className="sticky top-[82px]" style={{ border: '1px solid #e0e0e0', padding: '24px' }}>
+              <p className="text-[11px] uppercase tracking-[1px] text-[#adadad] mb-1">Asking price</p>
+              <p className="font-serif font-normal text-[32px] text-[#151515] mb-1">{formatPrice(listing.price)}</p>
+              {listing.size_sqm > 0 && (
+                <p className="text-[13px] text-[#adadad] mb-6">
+                  {Math.round(listing.price / listing.size_sqm).toLocaleString('en-GB')} EUR/m²
+                </p>
+              )}
               <a
                 href={`/contact?ref=${listing.slug}`}
-                className="block w-full text-center bg-accent text-white font-semibold py-3 rounded-lg hover:opacity-90 transition mb-3"
+                className="btn-brand w-full mb-3 text-center"
+                style={{ padding: '13px 20px', fontSize: '14px', display: 'block', textAlign: 'center' }}
               >
                 Enquire about this property
               </a>
               <a
                 href="/listings"
-                className="block w-full text-center border border-gray-200 text-gray-600 font-medium py-3 rounded-lg hover:bg-gray-50 transition text-sm"
+                className="btn-ghost w-full text-center"
+                style={{ padding: '11px 20px', fontSize: '13px', display: 'block', textAlign: 'center' }}
               >
-                ← Back to listings
+                Back to listings
               </a>
               {listing.idealista_url && (
                 <a
                   href={listing.idealista_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center text-xs text-gray-400 mt-4 hover:underline"
+                  className="block text-center text-[12px] text-[#adadad] mt-4"
+                  style={{ textDecoration: 'underline' }}
                 >
                   View on Idealista
                 </a>
