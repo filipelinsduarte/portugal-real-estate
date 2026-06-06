@@ -6,6 +6,7 @@ export default {
       colors: {
         accent:    '#c2622a',
         'accent-h':'#a8521f',
+        primary:   '#1a1a1a', // alias of ink — used by the about/guide/contact pages
         ink:       '#1a1a1a',
         secondary: '#5c5c5c',
         muted:     '#8a8a8a',

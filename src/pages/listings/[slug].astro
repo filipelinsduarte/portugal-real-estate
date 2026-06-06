@@ -121,7 +121,7 @@ const stats = [
             <ul class="grid grid-cols-2 gap-y-2">
               {listing.features.map((f) => (
                 <li class="flex items-center gap-2 text-[13px] text-[#606060]">
-                  <span class="w-1 h-1 bg-[#006c75] rounded-full flex-shrink-0" />
+                  <span class="w-1 h-1 bg-accent rounded-full flex-shrink-0" />
                   {f}
                 </li>
               ))}
@@ -142,14 +142,14 @@ const stats = [
           )}
           <a
             href={`/contact?ref=${listing.slug}`}
-            class="btn-brand w-full mb-3 text-center"
+            class="btn btn-accent w-full mb-3 text-center"
             style="padding:13px 20px;font-size:14px;display:block;text-align:center"
           >
             Enquire about this property
           </a>
           <a
             href="/listings"
-            class="btn-ghost w-full text-center"
+            class="btn btn-ghost w-full text-center"
             style="padding:11px 20px;font-size:13px;display:block;text-align:center"
           >
             Back to listings

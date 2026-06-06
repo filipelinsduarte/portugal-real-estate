@@ -65,6 +65,20 @@
     text-transform: uppercase; color: var(--muted);
   }
 
+  /* Page container width (used by the inner directory pages) */
+  .max-w-site { max-width: 1200px; margin-left: auto; margin-right: auto; }
+
+  /* Region filter pills */
+  .filter-pill {
+    display: inline-flex; align-items: center;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
+    padding: 8px 16px; border: 1px solid var(--border); border-radius: 0;
+    color: var(--secondary); background: #fff;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .filter-pill:hover { border-color: var(--ink); color: var(--ink); }
+  .filter-pill.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+
   /* Card */
   .listing-card { border: 1px solid var(--border); background: #fff; transition: border-color 0.15s; }
   .listing-card:hover { border-color: #b8a898; }
