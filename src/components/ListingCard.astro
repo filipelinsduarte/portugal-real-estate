@@ -1,0 +1,49 @@
+---
+interface Props {
+  listing: {
+    id: string | number
+    slug: string
+    title: string
+    region: string
+    neighbourhood: string
+    price: number
+    size_sqm: number
+    bedrooms: number
+    bathrooms: number
+    type: string
+    images: string[]
+  }
+  regionLabel?: string
+}
+
+const { listing, regionLabel } = Astro.props
+
+function formatPrice(price: number) {
+  return price.toLocaleString('en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })
+}
+---
+<a href={`/listings/${listing.slug}`} class="card-listing block group" style="text-decoration:none">
+  <div
+    class="bg-[#f5f5f5] flex items-center justify-center text-[#adadad] text-[11px] uppercase tracking-[1px]"
+    style="aspect-ratio:13/8"
+  >
+    {listing.images.length > 0
+      ? <img src={listing.images[0]} alt={listing.title} class="w-full h-full object-cover" />
+      : 'No Photo'}
+  </div>
+  <div class="p-4">
+    <p class="text-[11px] uppercase tracking-[1px] text-[#adadad] mb-1">
+      {regionLabel ? `${regionLabel} · ${listing.neighbourhood}` : listing.neighbourhood}
+    </p>
+    <p class="text-[14px] text-[#151515] leading-5 mb-3 group-hover:text-[#006c75] transition-colors line-clamp-2">
+      {listing.title}
+    </p>
+    <div class="flex items-end justify-between">
+      <p class="text-[16px] font-semibold text-[#151515]">{formatPrice(listing.price)}</p>
+      <p class="text-[12px] text-[#adadad]">{listing.size_sqm} m²</p>
+    </div>
+    <p class="text-[12px] text-[#adadad] mt-1 capitalize">
+      {listing.bedrooms > 0 ? `${listing.bedrooms} bed` : 'Studio'} · {listing.bathrooms} bath · {listing.type}
+    </p>
+  </div>
+</a>

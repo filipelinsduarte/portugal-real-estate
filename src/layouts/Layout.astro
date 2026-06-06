@@ -1,0 +1,71 @@
+---
+import '../styles/globals.css'
+import Nav from '../components/Nav.astro'
+import Footer from '../components/Footer.astro'
+
+interface Props {
+  /** Page-specific title. Rendered as `${title} | Portugal Real Estate for Sale`.
+      Omit on the home page to use the default full title. */
+  title?: string
+  description?: string
+  /** Full canonical URL for this page. */
+  canonical?: string
+  /** Override the OpenGraph title (defaults to the composed document title). */
+  ogTitle?: string
+}
+
+const SITE_NAME = 'Portugal Real Estate for Sale'
+const DEFAULT_TITLE = 'Portugal Real Estate for Sale | Find Property in Portugal'
+const DEFAULT_DESCRIPTION =
+  'Browse properties for sale in Portugal. Find apartments, villas and houses in Lisbon, Porto, Algarve and beyond. Helping foreign buyers navigate the Portuguese property market.'
+
+const { title, description, canonical, ogTitle } = Astro.props
+const docTitle = title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE
+const metaDescription = description ?? DEFAULT_DESCRIPTION
+const ogDocTitle = ogTitle ?? docTitle
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+
+    <title>{docTitle}</title>
+    <meta name="description" content={metaDescription} />
+    <meta name="robots" content="index, follow" />
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={ogDocTitle} />
+    <meta property="og:description" content={metaDescription} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Prata&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7ZGG3K604"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || []
+      function gtag() { dataLayer.push(arguments) }
+      gtag('js', new Date())
+      gtag('config', 'G-F7ZGG3K604')
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col bg-white font-sans">
+    <Nav />
+    <main class="flex-1"><slot /></main>
+    <Footer />
+  </body>
+</html>

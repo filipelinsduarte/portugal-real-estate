@@ -1,0 +1,22 @@
+---
+const links = [
+  { label: 'Listings', href: '/listings' },
+  { label: 'Lisbon', href: '/region/lisbon' },
+  { label: 'Algarve', href: '/region/algarve' },
+  { label: 'Porto', href: '/region/porto' },
+  { label: 'Contact', href: '#contact' },
+]
+---
+
+<header style="position:sticky;top:0;z-index:200;background:#fff;height:var(--nav-h);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad)">
+  <a href="/" style="font-family:'Prata',Georgia,serif;font-size:22px;color:var(--ink);text-decoration:none">
+    Portugal Real Estate<span style="color:var(--muted)">.</span>
+  </a>
+  <nav class="hidden md:flex" style="display:flex;align-items:center;gap:32px">
+    {links.map((l) => (
+      <a href={l.href} style="font-size:13px;font-weight:500;color:var(--secondary);text-decoration:none;transition:color 0.15s">
+        {l.label}
+      </a>
+    ))}
+  </nav>
+</header>

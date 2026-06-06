@@ -1,0 +1,45 @@
+---
+// Appears once the user scrolls past the hero. Its "Connect Me to an Agent"
+// button reuses the global LeadModal trigger contract (data-open-lead).
+---
+
+<div
+  id="sticky-bar"
+  style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:150;background:var(--ink);color:#fff;align-items:center;justify-content:space-between;padding:0 5vw;height:52px;border-top:1px solid rgba(255,255,255,0.12)"
+>
+  <span class="hidden md:block" style="font-size:13px;color:rgba(255,255,255,0.7)">Free agent matching for Portugal property buyers</span>
+  <div style="display:flex;align-items:center;gap:16px">
+    <button type="button" data-open-lead style="background:var(--accent);color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:9px 20px;cursor:pointer;transition:background 0.15s">
+      Connect Me to an Agent &rarr;
+    </button>
+    <button type="button" id="sticky-dismiss" aria-label="Dismiss" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:20px;cursor:pointer;line-height:1;padding:4px">&times;</button>
+  </div>
+</div>
+
+<script>
+  function initStickyBar() {
+    const bar = document.getElementById('sticky-bar')
+    const hero = document.getElementById('hero')
+    if (!bar) return
+    let dismissed = false
+
+    function onScroll() {
+      if (dismissed) return
+      const heroBottom = hero ? hero.getBoundingClientRect().bottom + window.scrollY : 400
+      bar!.style.display = window.scrollY > heroBottom - 100 ? 'flex' : 'none'
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+
+    const dismiss = document.getElementById('sticky-dismiss')
+    if (dismiss) {
+      dismiss.addEventListener('click', () => {
+        dismissed = true
+        bar!.style.display = 'none'
+      })
+    }
+  }
+
+  initStickyBar()
+</script>

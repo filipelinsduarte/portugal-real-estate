@@ -1,0 +1,58 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import SchemaMarkup from '../../components/SchemaMarkup.astro'
+import ListingCard from '../../components/ListingCard.astro'
+import listings from '../../data/listings.json'
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.portugalrealestateforsale.com' },
+    { '@type': 'ListItem', position: 2, name: 'Listings', item: 'https://www.portugalrealestateforsale.com/listings' },
+  ],
+}
+
+const REGION_LABELS: Record<string, string> = {
+  lisbon: 'Lisbon', porto: 'Porto', algarve: 'Algarve', 'silver-coast': 'Silver Coast', alentejo: 'Alentejo',
+}
+---
+<Layout
+  title="Property Listings in Portugal"
+  description="Browse real estate listings for sale in Portugal. Apartments, villas and houses in Lisbon, Porto, Algarve and beyond."
+  canonical="https://www.portugalrealestateforsale.com/listings"
+>
+  <SchemaMarkup schema={breadcrumbSchema} />
+  <div class="page-px max-w-site mx-auto py-10">
+
+    {/* Breadcrumb */}
+    <nav class="flex items-center gap-2 mb-8">
+      <a href="/" class="breadcrumb">Home</a>
+      <span class="text-[#afafaf] text-[11px]">/</span>
+      <span class="breadcrumb text-[#151515]">Listings</span>
+    </nav>
+
+    {/* Header */}
+    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4 mb-8">
+      <div>
+        <h1 class="font-serif font-normal text-[32px] text-[#151515] mb-1">Properties for Sale in Portugal</h1>
+        <p class="text-[14px] text-[#606060]">{listings.length} properties available</p>
+      </div>
+    </div>
+
+    {/* Region filter pills */}
+    <div class="flex flex-wrap gap-2 mb-10">
+      <a href="/listings" class="filter-pill active">All regions</a>
+      {Object.entries(REGION_LABELS).map(([slug, label]) => (
+        <a href={`/region/${slug}`} class="filter-pill">{label}</a>
+      ))}
+    </div>
+
+    {/* Grid */}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
+      {listings.map((listing) => (
+        <ListingCard listing={listing} regionLabel={REGION_LABELS[listing.region]} />
+      ))}
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,109 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import SchemaMarkup from '../../components/SchemaMarkup.astro'
+import ListingCard from '../../components/ListingCard.astro'
+import listings from '../../data/listings.json'
+
+const REGION_LABELS: Record<string, string> = {
+  lisbon: 'Lisbon', porto: 'Porto', algarve: 'Algarve', 'silver-coast': 'Silver Coast', alentejo: 'Alentejo',
+}
+
+function formatPrice(price: number) {
+  return price.toLocaleString('en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })
+}
+
+export function getStaticPaths() {
+  // Defined inside getStaticPaths: Astro hoists this function during the build,
+  // so it cannot read module-body consts declared elsewhere in the frontmatter.
+  const REGIONS: Record<string, { label: string; tagline: string; description: string }> = {
+    lisbon: {
+      label: 'Lisbon',
+      tagline: 'Capital city living',
+      description: "Browse properties for sale in Lisbon, Portugal's vibrant capital. From historic Alfama townhouses to modern Parque das Nações apartments, find your ideal Lisbon property.",
+    },
+    porto: {
+      label: 'Porto',
+      tagline: 'Northern cultural capital',
+      description: "Explore real estate for sale in Porto. Ribeira apartments, Foz do Douro villas, and restored buildings in the historic centre of Portugal's second city.",
+    },
+    algarve: {
+      label: 'Algarve',
+      tagline: 'Southern coastline',
+      description: "Discover properties in the Algarve, Portugal's premier coastal region. Villas with pools, beachside apartments, and golf resort properties in Albufeira, Lagos, Vilamoura, and beyond.",
+    },
+    'silver-coast': {
+      label: 'Silver Coast',
+      tagline: 'Atlantic character',
+      description: "Find real estate on Portugal's Silver Coast. Affordable houses and cottages in Óbidos, Peniche, Nazaré, and the Bombarral wine region, just 1 hour from Lisbon.",
+    },
+    alentejo: {
+      label: 'Alentejo',
+      tagline: 'Wine country estates',
+      description: "Browse Alentejo properties for sale. Traditional Monte farmhouses, vineyards, and country estates in Europe's most unspoiled wine country near Évora, Beja, and Mértola.",
+    },
+  }
+  return Object.entries(REGIONS).map(([region, meta]) => ({ params: { region }, props: { region, meta } }))
+}
+
+const { region, meta: r } = Astro.props
+
+const regionListings = listings.filter((l) => l.region === region)
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `Properties for Sale in ${r.label}, Portugal`,
+  description: r.description,
+  numberOfItems: regionListings.length,
+  itemListElement: regionListings.map((l, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: `https://www.portugalrealestateforsale.com/listings/${l.slug}`,
+    name: l.title,
+  })),
+}
+---
+<Layout
+  title={`Properties for Sale in ${r.label}, Portugal`}
+  description={r.description}
+  canonical={`https://www.portugalrealestateforsale.com/region/${region}`}
+>
+  <SchemaMarkup schema={schema} />
+  <div class="page-px max-w-site mx-auto py-10">
+
+    {/* Breadcrumb */}
+    <nav class="flex items-center gap-2 mb-8">
+      <a href="/" class="breadcrumb">Home</a>
+      <span class="text-[#afafaf] text-[11px]">/</span>
+      <a href="/listings" class="breadcrumb">Listings</a>
+      <span class="text-[#afafaf] text-[11px]">/</span>
+      <span class="breadcrumb text-[#151515]">{r.label}</span>
+    </nav>
+
+    {/* Header */}
+    <p class="section-label mb-3">{r.tagline}</p>
+    <h1 class="font-serif font-normal text-[32px] text-[#151515] mb-3">Properties for Sale in {r.label}</h1>
+    <p class="text-[14px] text-[#606060] mb-10" style="max-width:560px">{r.description}</p>
+
+    {/* Region filter pills */}
+    <div class="flex flex-wrap gap-2 mb-10">
+      <a href="/listings" class="filter-pill">All regions</a>
+      {Object.entries(REGION_LABELS).map(([slug, label]) => (
+        <a href={`/region/${slug}`} class={`filter-pill${slug === region ? ' active' : ''}`}>{label}</a>
+      ))}
+    </div>
+
+    {regionListings.length === 0 ? (
+      <div class="py-16 text-center" style="border:1px solid #e0e0e0">
+        <p class="text-[14px] text-[#606060]">No listings in this region yet.</p>
+        <a href="/listings" class="btn-ghost mt-6 inline-flex" style="padding:10px 20px">Browse all listings</a>
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
+        {regionListings.map((listing) => (
+          <ListingCard listing={listing} />
+        ))}
+      </div>
+    )}
+  </div>
+</Layout>

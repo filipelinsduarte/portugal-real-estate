@@ -1,0 +1,172 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import SchemaMarkup from '../../components/SchemaMarkup.astro'
+import listings from '../../data/listings.json'
+
+type Listing = typeof listings[0]
+
+export function getStaticPaths() {
+  return listings.map((listing) => ({ params: { slug: listing.slug }, props: { listing } }))
+}
+
+const { listing } = Astro.props
+
+function formatPrice(price: number) {
+  return price.toLocaleString('en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })
+}
+
+const REGION_LABELS: Record<string, string> = {
+  lisbon: 'Lisbon', porto: 'Porto', algarve: 'Algarve', 'silver-coast': 'Silver Coast', alentejo: 'Alentejo',
+}
+
+function buildSchema(listing: Listing) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateListing',
+    name: listing.title,
+    description: listing.description,
+    url: `https://www.portugalrealestateforsale.com/listings/${listing.slug}`,
+    datePosted: listing.listed_at,
+    price: listing.price,
+    priceCurrency: listing.currency,
+    address: { '@type': 'PostalAddress', streetAddress: listing.address, addressLocality: listing.city, addressCountry: 'PT' },
+    numberOfRooms: listing.bedrooms,
+    floorSize: { '@type': 'QuantitativeValue', value: listing.size_sqm, unitCode: 'MTK' },
+  }
+}
+
+const priceFormatted = formatPrice(listing.price)
+const metaTitle = `${listing.title}, ${priceFormatted}`
+const metaDescription = listing.description.slice(0, 160)
+const canonical = `https://www.portugalrealestateforsale.com/listings/${listing.slug}`
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.portugalrealestateforsale.com' },
+    { '@type': 'ListItem', position: 2, name: 'Listings', item: 'https://www.portugalrealestateforsale.com/listings' },
+    { '@type': 'ListItem', position: 3, name: listing.title, item: `https://www.portugalrealestateforsale.com/listings/${listing.slug}` },
+  ],
+}
+
+const stats = [
+  { label: 'Price', value: formatPrice(listing.price) },
+  { label: 'Size', value: `${listing.size_sqm} m²` },
+  { label: 'Bedrooms', value: listing.bedrooms > 0 ? String(listing.bedrooms) : 'Studio' },
+  { label: 'Bathrooms', value: String(listing.bathrooms) },
+  { label: 'Type', value: listing.type.charAt(0).toUpperCase() + listing.type.slice(1) },
+  ...(listing.floor ? [{ label: 'Floor', value: String(listing.floor) }] : []),
+]
+---
+<Layout title={metaTitle} description={metaDescription} canonical={canonical} ogTitle={metaTitle}>
+  <SchemaMarkup schema={buildSchema(listing)} />
+  <SchemaMarkup schema={breadcrumb} />
+
+  <div class="page-px max-w-site mx-auto py-10">
+
+    {/* Breadcrumb */}
+    <nav class="flex items-center gap-2 mb-8 flex-wrap">
+      <a href="/" class="breadcrumb">Home</a>
+      <span class="text-[#afafaf] text-[11px]">/</span>
+      <a href="/listings" class="breadcrumb">Listings</a>
+      <span class="text-[#afafaf] text-[11px]">/</span>
+      <a href={`/region/${listing.region}`} class="breadcrumb">{REGION_LABELS[listing.region] ?? listing.region}</a>
+      <span class="text-[#afafaf] text-[11px]">/</span>
+      <span class="breadcrumb text-[#151515]">{listing.neighbourhood}</span>
+    </nav>
+
+    {/* Main image */}
+    <div
+      class="w-full bg-[#f5f5f5] flex items-center justify-center text-[#adadad] text-[11px] uppercase tracking-[1px] mb-8"
+      style="aspect-ratio:16/7;max-height:520px"
+    >
+      {listing.images.length > 0
+        ? <img src={listing.images[0]} alt={listing.title} class="w-full h-full object-cover" />
+        : 'No photos available'}
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-12">
+      {/* Main content */}
+      <div class="md:col-span-2">
+        <p class="text-[11px] uppercase tracking-[1px] text-[#adadad] mb-2">
+          {REGION_LABELS[listing.region]} · {listing.neighbourhood} · {listing.city}
+        </p>
+        <h1 class="font-serif font-normal text-[32px] text-[#151515] leading-[1.15] mb-3">{listing.title}</h1>
+        <p class="text-[14px] text-[#606060] mb-6">{listing.address}</p>
+
+        {/* Key stats */}
+        <div class="flex flex-wrap gap-0 mb-8" style="border:1px solid #e0e0e0">
+          {stats.map((stat, i, arr) => (
+            <div
+              class="flex-1 p-4"
+              style={`border-right:${i < arr.length - 1 ? '1px solid #e0e0e0' : 'none'};min-width:100px`}
+            >
+              <p class="text-[11px] uppercase tracking-[1px] text-[#adadad] mb-1">{stat.label}</p>
+              <p class="text-[15px] font-semibold text-[#151515]">{stat.value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Description */}
+        <div class="mb-8" style="border-top:1px solid #e0e0e0;padding-top:32px">
+          <h2 class="font-serif font-normal text-[20px] text-[#151515] mb-4">About this property</h2>
+          <p class="text-[14px] text-[#606060] leading-6">{listing.description}</p>
+        </div>
+
+        {/* Features */}
+        {listing.features.length > 0 && (
+          <div style="border-top:1px solid #e0e0e0;padding-top:32px">
+            <h2 class="font-serif font-normal text-[20px] text-[#151515] mb-4">Features</h2>
+            <ul class="grid grid-cols-2 gap-y-2">
+              {listing.features.map((f) => (
+                <li class="flex items-center gap-2 text-[13px] text-[#606060]">
+                  <span class="w-1 h-1 bg-[#006c75] rounded-full flex-shrink-0" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      {/* Sidebar */}
+      <div>
+        <div class="sticky top-[82px]" style="border:1px solid #e0e0e0;padding:24px">
+          <p class="text-[11px] uppercase tracking-[1px] text-[#adadad] mb-1">Asking price</p>
+          <p class="font-serif font-normal text-[32px] text-[#151515] mb-1">{formatPrice(listing.price)}</p>
+          {listing.size_sqm > 0 && (
+            <p class="text-[13px] text-[#adadad] mb-6">
+              {Math.round(listing.price / listing.size_sqm).toLocaleString('en-GB')} EUR/m²
+            </p>
+          )}
+          <a
+            href={`/contact?ref=${listing.slug}`}
+            class="btn-brand w-full mb-3 text-center"
+            style="padding:13px 20px;font-size:14px;display:block;text-align:center"
+          >
+            Enquire about this property
+          </a>
+          <a
+            href="/listings"
+            class="btn-ghost w-full text-center"
+            style="padding:11px 20px;font-size:13px;display:block;text-align:center"
+          >
+            Back to listings
+          </a>
+          {listing.idealista_url && (
+            <a
+              href={listing.idealista_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block text-center text-[12px] text-[#adadad] mt-4"
+              style="text-decoration:underline"
+            >
+              View on Idealista
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

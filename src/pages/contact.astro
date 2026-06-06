@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro'
+import SchemaMarkup from '../components/SchemaMarkup.astro'
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.portugalrealestateforsale.com' },
+    { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://www.portugalrealestateforsale.com/contact' },
+  ],
+}
+---
+
+<Layout
+  title="Contact Us"
+  description="Have a question about buying property in Portugal? Send us a message and we will get back to you."
+  canonical="https://www.portugalrealestateforsale.com/contact"
+>
+  <SchemaMarkup schema={breadcrumbSchema} />
+  <section class="py-16 px-4">
+    <div class="max-w-2xl mx-auto">
+      <h1 class="text-3xl md:text-4xl font-bold text-primary mb-3">Contact Us</h1>
+      <p class="text-gray-600 mb-8">
+        Have a question about buying property in Portugal? Want to enquire about a listing? Send us a message and we will get back to you.
+      </p>
+      <div class="bg-green-50 border border-green-200 rounded-xl p-6 text-center" style="display:none" data-contact-success>
+        <p class="text-primary font-semibold text-lg">Message sent.</p>
+        <p class="text-gray-600 text-sm mt-1">We will get back to you within 1-2 business days.</p>
+      </div>
+      <form class="space-y-5" data-contact-form>
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Your name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            maxlength="100"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            maxlength="254"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+        <div>
+          <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            required
+            maxlength="2000"
+            rows="5"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="bg-accent text-white font-semibold px-8 py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-60"
+        >
+          Send message
+        </button>
+      </form>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const form = document.querySelector('[data-contact-form]') as HTMLFormElement | null
+  const success = document.querySelector('[data-contact-success]') as HTMLElement | null
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      const button = form.querySelector('button[type="submit"]') as HTMLButtonElement | null
+      if (button) {
+        button.disabled = true
+        button.textContent = 'Sending...'
+      }
+      // TODO: connect to contact form endpoint
+      setTimeout(() => {
+        form.style.display = 'none'
+        if (success) {
+          success.style.display = 'block'
+        }
+      }, 800)
+    })
+  }
+</script>

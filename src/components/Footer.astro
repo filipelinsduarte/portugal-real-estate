@@ -1,0 +1,52 @@
+---
+const browse = [
+  { label: 'All listings', href: '/listings' },
+  { label: 'Lisbon', href: '/region/lisbon' },
+  { label: 'Porto', href: '/region/porto' },
+  { label: 'Algarve', href: '/region/algarve' },
+  { label: 'Silver Coast', href: '/region/silver-coast' },
+  { label: 'Alentejo', href: '/region/alentejo' },
+]
+
+const company = [
+  { label: "Buyer's Guide", href: '/guide' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+]
+---
+
+<footer id="contact" style="background:var(--ink);color:#fff;padding:64px var(--pad) 32px">
+  <div class="footer-grid" style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px">
+    <div>
+      <p style="font-family:'Prata',Georgia,serif;font-size:22px;margin-bottom:14px">
+        Portugal Real Estate<span style="color:var(--muted)">.</span>
+      </p>
+      <p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.5);max-width:280px">
+        Free agent matching for international buyers of Portuguese property. Lisbon, Porto, Algarve, Silver Coast, and Alentejo.
+      </p>
+    </div>
+    <div>
+      <p style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:18px">Browse</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:10px">
+        {browse.map((l) => (
+          <li><a href={l.href} style="font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none">{l.label}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <p style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:18px">Company</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+        {company.map((l) => (
+          <li><a href={l.href} style="font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none">{l.label}</a></li>
+        ))}
+      </ul>
+      <a href="mailto:hello@portugalrealestateforsale.com" style="font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none">
+        hello@portugalrealestateforsale.com
+      </a>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <p style="font-size:12px;color:rgba(255,255,255,0.3)">&copy; 2025 Portugal Real Estate for Sale. All rights reserved.</p>
+    <p style="font-size:12px;color:rgba(255,255,255,0.3)">Property listings in Portugal for international buyers.</p>
+  </div>
+</footer>
