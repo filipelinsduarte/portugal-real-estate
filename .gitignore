@@ -32,3 +32,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Full-res source PNGs from gpt-image-1 (site uses the optimized .jpg)
+public/images/*.png

@@ -80,6 +80,11 @@ const schema = {
       <span class="breadcrumb text-[#151515]">{r.label}</span>
     </nav>
 
+    {/* Region banner */}
+    <div style="aspect-ratio:21/9;overflow:hidden;margin-bottom:32px;background:#d6cfc7">
+      <img src={`/images/${region}.jpg`} alt={`${r.label}, Portugal`} loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+    </div>
+
     {/* Header */}
     <p class="section-label mb-3">{r.tagline}</p>
     <h1 class="font-serif font-normal text-[32px] text-[#151515] mb-3">Properties for Sale in {r.label}</h1>
