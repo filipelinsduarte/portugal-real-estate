@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """
-Generate on-brand Portugal imagery with OpenAI gpt-image-1 (the engine behind
-ChatGPT's image generation), with a SAFE PREVIEW workflow:
+Generate on-brand Portugal imagery with MiniMax image-01, with a SAFE PREVIEW workflow:
 
   1. Generate -> writes to image-staging/ (NOT the live site) + builds a
      preview.html contact sheet and opens it in your browser.
   2. Review the gallery. Regenerate any you don't like with --only <name>.
   3. Promote the keepers into public/images/ (the live folder) with --promote.
 
+MiniMax is funded by the coding-plan key (sk-cp), so generation is effectively free
+(no per-image cost beyond the existing subscription) — that's why it's the only backend.
+
 Usage:
   # generate everything into staging, open the preview gallery
-  OPENAI_API_KEY=sk-... python3 scripts/generate_images.py
+  python3 scripts/generate_images.py
 
   # regenerate just a couple (rebuilds the gallery)
-  OPENAI_API_KEY=sk-... python3 scripts/generate_images.py --only lisbon porto
+  python3 scripts/generate_images.py --only lisbon porto
 
   # happy with staging -> copy into the live public/images/ folder
   python3 scripts/generate_images.py --promote
@@ -25,7 +27,6 @@ import os
 import sys
 import json
 import time
-import base64
 import shutil
 import argparse
 import subprocess
@@ -34,19 +35,12 @@ from io import BytesIO
 from html import escape
 from PIL import Image
 
-API_URL = "https://api.openai.com/v1/images/generations"
-# Default backend: OpenAI gpt-image-2 (very photorealistic; needs OPENAI_API_KEY + billing room).
-# Alternative: --model minimax  ->  MiniMax image-01, funded by the coding-plan (sk-cp) key,
-# so effectively free per image and not subject to the OpenAI billing limit. Both honour STYLE.
-MODEL = "gpt-image-2"
-
 # MiniMax image generation (model "image-01"). Uses the coding-plan key (sk-cp) which has
-# image credits — the sk-api workspace key is empty. See reference_api_keys.md.
+# image credits bundled with the subscription. See reference_api_keys.md.
 MINIMAX_IMG_URL = "https://api.minimax.io/v1/image_generation"
 MINIMAX_KEY = ("sk-cp-kP5LL6Wi4s-WsKji435cUjrY8137njNT9T_3t2hh3ASEf0BFrHkSDWJs8qn61v"
                "VEvxyx5oIrknMSegYNuACYl04MfoOMq0PA58heBel1nEQcdVgsWOEjXIw")
-MINIMAX_ALIASES = {"minimax", "image-01", "minimax-image"}
-# gpt-image size string -> MiniMax aspect_ratio
+# Logical size -> MiniMax aspect_ratio (WIDE = landscape hero/region, SQUARE = listing)
 SIZE_TO_ASPECT = {"1536x1024": "3:2", "1024x1024": "1:1", "1024x1536": "2:3"}
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 STAGING_DIR = os.path.join(ROOT, "image-staging")   # preview only, gitignored
@@ -135,26 +129,6 @@ THUMB_FROM = {
 PROMPTS = {name: prompt for name, _, prompt in IMAGES}
 
 
-def _generate_openai(name, size, prompt, api_key, model):
-    body = json.dumps({
-        "model": model,
-        "prompt": f"{prompt} {STYLE}",
-        "size": size,
-        "quality": "high",
-        "n": 1,
-    }).encode()
-    req = urllib.request.Request(
-        API_URL, data=body,
-        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
-    )
-    with urllib.request.urlopen(req, timeout=300) as r:
-        data = json.loads(r.read())
-    b64 = data["data"][0].get("b64_json")
-    if not b64:
-        raise RuntimeError(f"no image data for {name}: {data['data'][0]}")
-    return Image.open(BytesIO(base64.b64decode(b64))).convert("RGB")
-
-
 def _generate_minimax(name, size, prompt):
     # prompt_optimizer=False so MiniMax does NOT rewrite/embellish our prompt — keeps it
     # faithful to the real scene (aligns with the STYLE "no invented elements" directive).
@@ -182,13 +156,11 @@ def _generate_minimax(name, size, prompt):
         return Image.open(BytesIO(r.read())).convert("RGB")
 
 
-def generate(name, size, prompt, api_key, model=MODEL, retries=4):
+def generate(name, size, prompt, retries=4):
     last = None
     for attempt in range(1, retries + 1):
         try:
-            if model.lower() in MINIMAX_ALIASES:
-                return _generate_minimax(name, size, prompt)
-            return _generate_openai(name, size, prompt, api_key, model)
+            return _generate_minimax(name, size, prompt)
         except Exception as e:
             last = e
             if attempt < retries:
@@ -340,27 +312,20 @@ def main():
     ap.add_argument("--promote", action="store_true",
                     help="copy staged images into public/images/ (the live folder)")
     ap.add_argument("--no-open", action="store_true", help="don't auto-open the preview")
-    ap.add_argument("--model", default=MODEL,
-                    help=f"image model to use (default: {MODEL})")
     args = ap.parse_args()
 
     if args.promote:
         promote(set(args.only) if args.only else None)
         return
 
-    use_minimax = args.model.lower() in MINIMAX_ALIASES
-    api_key = os.environ.get("OPENAI_API_KEY")
-    if not use_minimax and not api_key:
-        sys.exit("set OPENAI_API_KEY (or use --model minimax)")
-
     os.makedirs(STAGING_DIR, exist_ok=True)
     targets = [x for x in IMAGES if not args.only or x[0] in args.only]
 
     saved = {}
     for i, (name, size, prompt) in enumerate(targets, 1):
-        print(f"[{i}/{len(targets)}] generating {name} ({size}) on {args.model} ...", flush=True)
+        print(f"[{i}/{len(targets)}] generating {name} ({size}) on MiniMax image-01 ...", flush=True)
         try:
-            img = generate(name, size, prompt, api_key, model=args.model)
+            img = generate(name, size, prompt)
         except Exception as e:
             print(f"  FAILED {name}: {e}", flush=True)
             continue
