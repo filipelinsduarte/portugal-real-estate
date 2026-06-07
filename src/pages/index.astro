@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import HeroSlideshow from '../components/HeroSlideshow.astro';
 import LeadModal from '../components/LeadModal.astro';
 import StickyBar from '../components/StickyBar.astro';
+import SchemaMarkup from '../components/SchemaMarkup.astro';
 import listings from '../data/listings.json';
 
 const REGION_LABELS = {
@@ -64,9 +65,21 @@ const faqs = [
   { q: 'What are the best areas to buy property in Portugal?', a: 'Lisbon offers the most liquid market with strong capital appreciation. The Algarve suits buyers prioritising lifestyle and rental yield. Porto delivers strong short-term rental returns at lower entry prices. The Silver Coast and Alentejo offer authentic Portugal at 40 to 60 percent below Lisbon prices.' },
   { q: 'Is Portugal real estate a good investment in 2025?', a: 'Portugal has seen consistent price growth averaging 7 to 10 percent annually in prime urban markets since 2017. Gross rental yields in Lisbon range from 3 to 5 percent, higher in Porto and the Algarve. Strong tourism demand and limited housing supply continue to support the market.' },
 ];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
 ---
 
 <Layout canonical="https://www.portugalrealestateforsale.com">
+  <SchemaMarkup schema={faqSchema} />
+
   {/* ── Hero ── */}
   <section id="hero" style="position:relative;padding:120px var(--pad) 100px;border-bottom:1px solid var(--border);overflow:hidden;min-height:560px">
     <HeroSlideshow />

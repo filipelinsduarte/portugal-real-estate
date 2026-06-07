@@ -1,0 +1,38 @@
+# Portugal Real Estate for Sale
+
+> A free agent-matching service that connects international buyers with vetted, English-speaking real estate agents across Portugal. We help foreign buyers find apartments, villas, townhouses and farmhouses for sale in Lisbon, Porto, the Algarve, the Silver Coast and the Alentejo. The service is free for buyers, with no fees and no obligation.
+
+## What this site does
+
+- Buyers tell us their budget, preferred region, property type and timeline through a short form.
+- We match them with a licensed Portuguese agent who specialises in that exact area and speaks their language.
+- The agent handles everything from shortlist to signed deed: viewings, negotiation, legal guidance and post-sale support.
+- The service costs buyers nothing. We are paid a referral fee by partner agencies, never by the buyer.
+
+## Key facts for buyers
+
+- Foreigners (both EU and non-EU) can buy property in Portugal with no restrictions, following the same legal steps as Portuguese nationals: promissory contract, fiscal number (NIF), and final deed at a notary.
+- Typical transaction costs are 6 to 8 percent of the purchase price (IMT transfer tax, 0.8 percent stamp duty, notary and registry fees, and 1 to 2 percent legal fees).
+- The Non-Habitual Resident (NHR) regime can offer qualifying new tax residents a flat 20 percent rate on Portuguese-source income for up to 10 years.
+- Regions: Lisbon (most liquid market, strong appreciation), Porto (strong rental yields at lower entry prices), Algarve (lifestyle and rental yield), Silver Coast and Alentejo (authentic Portugal at 40 to 60 percent below Lisbon prices).
+
+## Main pages
+
+- [Home](https://www.portugalrealestateforsale.com/): Overview, featured listings, how the matching service works, and FAQs.
+- [All listings](https://www.portugalrealestateforsale.com/listings): Every property currently for sale across Portugal.
+- [Buyer's Guide](https://www.portugalrealestateforsale.com/guide): How to buy property in Portugal as a foreign buyer (legal process, taxes, NHR, mortgages).
+- [About](https://www.portugalrealestateforsale.com/about): What the service is and how it works.
+- [Contact](https://www.portugalrealestateforsale.com/contact): Get in touch or enquire about a property.
+
+## Browse by region
+
+- [Lisbon](https://www.portugalrealestateforsale.com/region/lisbon): Capital city living, from Alfama townhouses to Parque das Nações apartments.
+- [Porto](https://www.portugalrealestateforsale.com/region/porto): Ribeira apartments, Foz do Douro villas and restored historic-centre buildings.
+- [Algarve](https://www.portugalrealestateforsale.com/region/algarve): Coastal villas with pools, beachside apartments and golf-resort properties.
+- [Silver Coast](https://www.portugalrealestateforsale.com/region/silver-coast): Affordable houses and cottages around Óbidos, Peniche and Nazaré, one hour from Lisbon.
+- [Alentejo](https://www.portugalrealestateforsale.com/region/alentejo): Monte farmhouses, vineyards and country estates in unspoiled wine country.
+
+## Contact
+
+- Email: hello@portugalrealestateforsale.com
+- Sitemap: https://www.portugalrealestateforsale.com/sitemap-index.xml
