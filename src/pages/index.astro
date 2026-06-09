@@ -28,43 +28,54 @@ const CARD_IMAGES = [
 ];
 
 const MARQUEE_ITEMS = [
-  'Golden Visa Program', 'NHR Tax Regime', '300 Days of Sunshine',
+  'Residency & Visa Options', 'NHR 2.0 Tax Incentive', '300 Days of Sunshine',
   'EU Member State', 'Safe & Stable', 'World-Class Healthcare',
   'Low Cost of Living', 'English Widely Spoken',
 ];
 
-function formatPrice(price) {
+function formatPrice(price: number) {
   return price.toLocaleString('en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 }
 
 const featured = listings.slice(0, 4);
 
 const steps = [
-  { n: '01', title: 'Tell us what you want', body: 'Share your budget, preferred region, and property type. Takes under two minutes.' },
-  { n: '02', title: 'We match you with a specialist', body: 'We connect you with a licensed agent who specialises in your exact area and speaks your language.' },
-  { n: '03', title: 'Your agent handles everything', body: 'From shortlist to signed deed. Viewings, negotiation, legal guidance, and post-sale support.' },
+  { n: '01', icon: 'clipboard', title: 'Tell us what you want', body: 'Share your budget, preferred region, and property type. Takes under two minutes.' },
+  { n: '02', icon: 'users', title: 'We match you with a specialist', body: 'We connect you with a licensed agent who specialises in your exact area and speaks your language.' },
+  { n: '03', icon: 'key', title: 'Your agent handles everything', body: 'From shortlist to signed deed. Viewings, negotiation, legal guidance, and post-sale support.' },
 ];
 
 const stats = [
   { num: '300+', label: 'Days of sunshine per year' },
-  { num: '#3', label: 'Safest country in Europe, 2024' },
-  { num: '20%', label: 'Flat NHR income tax rate for residents' },
+  { num: '#7', label: 'Safest country in the world, 2025 (Global Peace Index)' },
+  { num: '20%', label: 'Flat tax rate on eligible income under NHR 2.0 (IFICI)' },
   { num: '1.1k', label: 'km of Atlantic coastline' },
 ];
 
 const valueProps = [
-  { title: 'No buyer fees, ever', body: 'This service costs buyers nothing. You get matched with a qualified local agent at zero cost, with no obligation to proceed.' },
-  { title: 'Vetted local agents, not a listings portal', body: 'We connect you directly with a licensed Portuguese agent who specialises in your target region. Not a generic database. Not an algorithm.' },
-  { title: 'One form, the right expert for your search', body: 'Whether you are buying in Lisbon, the Algarve, or a quiet Silver Coast village, we match you with a specialist who knows that market deeply.' },
-  { title: '47 buyers matched this month', body: "Portugal's popular listings go under offer within 2 to 4 weeks. Most buyers we match hear from their agent the same day they enquire." },
+  { icon: 'tag', title: 'No buyer fees, ever', body: 'This service costs buyers nothing. You get matched with a qualified local agent at zero cost, with no obligation to proceed.' },
+  { icon: 'shield', title: 'Vetted local agents, not a listings portal', body: 'We connect you directly with a licensed Portuguese agent who specialises in your target region. Not a generic database. Not an algorithm.' },
+  { icon: 'target', title: 'One form, the right expert for your search', body: 'Whether you are buying in Lisbon, the Algarve, or a quiet Silver Coast village, we match you with a specialist who knows that market deeply.' },
+  { icon: 'trending', title: '47 buyers matched this month', body: "Portugal's popular listings go under offer within 2 to 4 weeks. Most buyers we match hear from their agent the same day they enquire." },
 ];
+
+// Minimal thin-line icons (hairline 1.25 stroke, simple geometry — clean editorial style)
+const ICONS: Record<string, string> = {
+  clipboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+  users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>',
+  key: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>',
+  tag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>',
+  shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>',
+  target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="1.5"/></svg>',
+  trending: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-8"/><path d="M16 7h5v5"/></svg>',
+};
 
 const faqs = [
   { q: 'Can foreigners buy property in Portugal?', a: 'Yes. Portugal places no restrictions on foreign nationals purchasing property. Non-EU and EU citizens alike can buy freely following the same legal steps as Portuguese nationals: promissory contract, fiscal number (NIF), and final deed at a notary. A local solicitor is strongly recommended to handle due diligence.' },
   { q: 'What are the costs of buying property in Portugal?', a: 'Budget for 6 to 8 percent of the purchase price in transaction costs. This covers IMT transfer tax (0 to 8 percent depending on value), stamp duty at 0.8 percent, notary and land registry fees, and legal fees of 1 to 2 percent. Our agent matching service costs buyers nothing.' },
-  { q: 'What is the Portugal NHR tax regime?', a: 'Non-Habitual Resident status offers qualifying new tax residents a flat 20 percent rate on Portuguese-source income and potential exemptions on foreign-source income for 10 years. You qualify by not having been a Portuguese tax resident in the previous 5 years.' },
+  { q: 'What is the Portugal NHR tax regime in 2026?', a: 'The original Non-Habitual Resident (NHR) regime closed to new applicants at the end of 2023. It has been replaced by the IFICI incentive, often called NHR 2.0, which offers eligible new residents in qualifying high-value, scientific, or innovation roles a flat 20 percent rate on Portuguese-source employment and self-employment income, plus exemptions on most foreign-source income, for 10 years. Anyone who already holds NHR status keeps it until their 10-year term ends. Confirm your eligibility with a Portuguese tax advisor.' },
   { q: 'What are the best areas to buy property in Portugal?', a: 'Lisbon offers the most liquid market with strong capital appreciation. The Algarve suits buyers prioritising lifestyle and rental yield. Porto delivers strong short-term rental returns at lower entry prices. The Silver Coast and Alentejo offer authentic Portugal at 40 to 60 percent below Lisbon prices.' },
-  { q: 'Is Portugal real estate a good investment in 2025?', a: 'Portugal has seen consistent price growth averaging 7 to 10 percent annually in prime urban markets since 2017. Gross rental yields in Lisbon range from 3 to 5 percent, higher in Porto and the Algarve. Strong tourism demand and limited housing supply continue to support the market.' },
+  { q: 'Is Portugal real estate a good investment in 2026?', a: 'Portugal has seen consistent price growth averaging 7 to 10 percent annually in prime urban markets since 2017, with momentum continuing into 2026. Gross rental yields in Lisbon range from 3 to 5 percent, higher in Porto and the Algarve. Strong tourism demand and limited housing supply continue to support the market.' },
 ];
 
 const faqSchema = {
@@ -85,19 +96,15 @@ const faqSchema = {
   <section id="hero" style="position:relative;padding:120px var(--pad) 100px;border-bottom:1px solid var(--border);overflow:hidden;min-height:560px">
     <HeroSlideshow />
     <div style="position:relative;z-index:1">
-      <p style="font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:20px;display:flex;align-items:center;gap:10px">
-        <span style="display:inline-block;width:24px;height:1px;background:rgba(255,255,255,0.5)"></span>
-        Free agent matching for international buyers
-      </p>
-      <h1 style="font-family:Prata, Georgia, serif;font-weight:400;font-size:clamp(36px, 5vw, 54px);color:#fff;margin-bottom:18px;max-width:600px;line-height:1.15">
+      <h1 style="font-family:Prata, Georgia, serif;font-weight:400;font-size:clamp(40px, 5.6vw, 62px);color:#fff;margin-bottom:20px;max-width:640px;line-height:1.12;text-shadow:0 2px 10px rgba(0,0,0,0.35)">
         Find Property in Portugal
       </h1>
-      <p style="font-size:16px;color:rgba(255,255,255,0.8);max-width:480px;margin-bottom:36px;line-height:1.7">
-        Tell us what you are looking for and we will connect you with a vetted, English-speaking Portuguese agent who knows your target area. No fees, no obligations.
+      <p style="font-size:clamp(17px, 1.6vw, 20px);color:#ffffff;font-weight:500;max-width:620px;margin-bottom:36px;line-height:1.6;text-shadow:0 1px 4px rgba(0,0,0,0.45)">
+        Tell us what you are looking for and we will connect you with a vetted, English-speaking Portuguese agent who knows your target area.
       </p>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a href="/listings" class="btn btn-accent" style="padding:13px 26px">Browse Properties &rarr;</a>
-        <button type="button" data-open-lead class="btn btn-ghost-light" style="padding:13px 26px">Connect Me to an Agent</button>
+        <a href="/listings" class="btn btn-accent" style="padding:13px 26px;color:#fff;font-weight:700">Browse Properties &rarr;</a>
+        <button type="button" data-open-lead class="btn btn-ghost-light" style="padding:13px 26px;color:#fff;font-weight:700">Connect Me to an Agent</button>
       </div>
     </div>
   </section>
@@ -107,22 +114,13 @@ const faqSchema = {
     <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:0" class="how-grid">
       {steps.map((step, i) => (
         <div style={`padding:0 40px 0 0;border-right:${i < 2 ? '1px solid var(--border)' : 'none'};margin-right:${i < 2 ? '40px' : '0'}`}>
-          <p style="font-family:Prata, Georgia, serif;font-size:32px;color:var(--ink);margin-bottom:12px;line-height:1">{step.n}</p>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+            <span class="feature-icon" set:html={ICONS[step.icon]} />
+            <span style="font-family:Prata, Georgia, serif;font-size:24px;color:var(--accent);line-height:1">{step.n}</span>
+          </div>
           <p style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px">{step.title}</p>
           <p style="font-size:13px;color:var(--secondary);line-height:1.6">{step.body}</p>
         </div>
-      ))}
-    </div>
-  </div>
-
-  {/* ── Marquee ── */}
-  <div style="background:var(--ink);border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0;overflow:hidden;white-space:nowrap">
-    <div class="marquee-inner">
-      {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item) => (
-        <span style="display:inline-flex;align-items:center">
-          <span style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);padding:0 20px">{item}</span>
-          <span style="color:var(--accent);padding:0 4px">&middot;</span>
-        </span>
       ))}
     </div>
   </div>
@@ -186,6 +184,18 @@ const faqSchema = {
     </div>
   </section>
 
+  {/* ── Marquee ── */}
+  <div style="background:var(--ink);border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0;overflow:hidden;white-space:nowrap">
+    <div class="marquee-inner">
+      {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item) => (
+        <span style="display:inline-flex;align-items:center">
+          <span style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);padding:0 20px">{item}</span>
+          <span style="color:var(--accent);padding:0 4px">&middot;</span>
+        </span>
+      ))}
+    </div>
+  </div>
+
   {/* ── Regions ── */}
   <section style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:64px var(--pad)">
     <div style="margin-bottom:32px">
@@ -206,7 +216,7 @@ const faqSchema = {
             <p style="font-size:12px;color:var(--secondary)">View properties</p>
           </div>
           <img
-            src={REGION_THUMBS[slug]}
+            src={REGION_THUMBS[slug as keyof typeof REGION_THUMBS]}
             alt={label}
             style="width:60px;height:60px;object-fit:cover;flex-shrink:0;border:1px solid var(--border);margin-left:12px;align-self:center"
           />
@@ -244,7 +254,7 @@ const faqSchema = {
         </div>
         <div style="border:1px solid var(--border);background:var(--surface);padding:22px 24px">
           <p style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px">Free Buying Guide</p>
-          <p style="font-size:12px;color:var(--secondary);line-height:1.6;margin-bottom:14px">Download our 2025 guide to buying property in Portugal as a foreigner, including legal steps, taxes, and costs explained.</p>
+          <p style="font-size:12px;color:var(--secondary);line-height:1.6;margin-bottom:14px">Download our 2026 guide to buying property in Portugal as a foreigner, including legal steps, taxes, and costs explained.</p>
           <span style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--border);padding-bottom:1px;cursor:pointer">
             Download Guide &rarr;
           </span>
@@ -254,12 +264,12 @@ const faqSchema = {
   </section>
 
   {/* ── Why Use This Service ── */}
-  <section style="padding:72px var(--pad);border-bottom:1px solid var(--border)">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start" class="value-grid">
+  <section style="padding:80px var(--pad);background:var(--surface);border-bottom:1px solid var(--border)">
+    <div class="guidance-grid" style="display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;margin-bottom:56px">
       <div>
-        <p class="section-label" style="margin-bottom:10px">Why buying in Portugal</p>
-        <h2 style="font-size:clamp(22px, 3vw, 32px);margin-bottom:16px">The right market.<br />The right guidance.</h2>
-        <p style="font-size:14px;color:var(--secondary);line-height:1.7;margin-bottom:28px;max-width:380px">
+        <p class="section-label" style="margin-bottom:12px">Why buying in Portugal</p>
+        <h2 style="font-size:clamp(24px, 3vw, 36px);margin-bottom:16px">The right market. The right guidance.</h2>
+        <p style="font-size:15px;color:var(--secondary);line-height:1.7;margin-bottom:28px;max-width:520px">
           Portugal offers some of the most compelling buying conditions in Europe: stable legal framework, no restrictions on foreign buyers, competitive prices relative to Western Europe, and a quality of life that is hard to match.
         </p>
         <div style="display:flex;gap:12px;flex-wrap:wrap">
@@ -267,14 +277,18 @@ const faqSchema = {
           <button type="button" data-open-lead class="btn btn-ghost">Connect Me to an Agent</button>
         </div>
       </div>
-      <div style="border:1px solid var(--border)">
-        {valueProps.map((prop, i) => (
-          <div style={`padding:22px 24px;border-bottom:${i < 3 ? '1px solid var(--border)' : 'none'}`}>
-            <p style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px">{prop.title}</p>
-            <p style="font-size:13px;color:var(--secondary);line-height:1.6">{prop.body}</p>
-          </div>
-        ))}
+      <div class="guidance-image">
+        <img src="/images/guide-portugal.jpg" alt="A whitewashed Portuguese coastal street with azulejo tiles, bougainvillea, and an ocean view" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid var(--border);display:block" />
       </div>
+    </div>
+    <div class="value-cards" style="display:grid;grid-template-columns:repeat(4, 1fr);gap:1px;background:var(--border);border:1px solid var(--border)">
+      {valueProps.map((prop) => (
+        <div style="padding:30px 26px;background:#fff">
+          <span class="feature-icon feature-icon-accent" set:html={ICONS[prop.icon]} style="margin-bottom:16px" />
+          <p style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.35">{prop.title}</p>
+          <p style="font-size:13px;color:var(--secondary);line-height:1.6">{prop.body}</p>
+        </div>
+      ))}
     </div>
   </section>
 
@@ -307,4 +321,29 @@ const faqSchema = {
 
 <style>
   .region-cell:hover { background: var(--bg) !important; }
+
+  /* Thin-line feature icons (:global because the SVG is injected via set:html) */
+  .feature-icon { display: inline-flex; color: var(--ink); }
+  .feature-icon :global(svg) { width: 22px; height: 22px; display: block; }
+  .feature-icon-accent { color: var(--accent); }
+  .feature-icon-accent :global(svg) { width: 26px; height: 26px; }
+
+  /* ── Responsive: collapse the inline repeat(N) grids on tablet/mobile ── */
+  @media (max-width: 900px) {
+    .guidance-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+    .value-cards   { grid-template-columns: repeat(2, 1fr) !important; }
+    .listings-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .regions-panel { grid-template-columns: repeat(2, 1fr) !important; }
+    .regions-panel .region-cell { border-right: none !important; border-bottom: 1px solid var(--border); }
+    .how-grid      { grid-template-columns: 1fr !important; gap: 26px !important; }
+    .how-grid > div { padding: 0 !important; margin: 0 !important; border-right: none !important; }
+    .case-grid     { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .faq-grid      { grid-template-columns: 1fr !important; gap: 32px !important; }
+  }
+  @media (max-width: 560px) {
+    .value-cards   { grid-template-columns: 1fr !important; }
+    .listings-grid { grid-template-columns: 1fr !important; }
+    .regions-panel { grid-template-columns: 1fr !important; }
+    #hero          { padding: 88px var(--pad) 60px !important; min-height: 440px !important; }
+  }
 </style>

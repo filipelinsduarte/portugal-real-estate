@@ -35,3 +35,6 @@ next-env.d.ts
 
 # Full-res source PNGs from gpt-image-1 (site uses the optimized .jpg)
 public/images/*.png
+
+# Image preview staging (not served, not committed)
+image-staging/

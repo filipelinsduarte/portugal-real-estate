@@ -12,11 +12,78 @@ const links = [
   <a href="/" style="font-family:'Prata',Georgia,serif;font-size:22px;color:var(--ink);text-decoration:none">
     Portugal Real Estate<span style="color:var(--muted)">.</span>
   </a>
-  <nav class="hidden md:flex" style="display:flex;align-items:center;gap:32px">
+
+  <nav class="nav-desktop" style="align-items:center;gap:32px">
     {links.map((l) => (
       <a href={l.href} style="font-size:13px;font-weight:500;color:var(--secondary);text-decoration:none;transition:color 0.15s">
         {l.label}
       </a>
     ))}
   </nav>
+
+  <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+
+<nav class="nav-mobile" id="navMobile" aria-hidden="true">
+  {links.map((l) => (
+    <a href={l.href}>{l.label}</a>
+  ))}
+</nav>
+
+<style>
+  .nav-desktop { display: flex; }
+
+  /* Hamburger button (hidden on desktop) */
+  .nav-toggle {
+    display: none;
+    flex-direction: column; justify-content: center; gap: 5px;
+    width: 40px; height: 40px; padding: 0; margin-right: -8px;
+    background: transparent; border: none; cursor: pointer;
+  }
+  .nav-toggle span {
+    display: block; width: 22px; height: 2px; background: var(--ink);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile dropdown panel */
+  .nav-mobile {
+    display: none; flex-direction: column;
+    position: sticky; top: var(--nav-h); z-index: 199;
+    background: #fff; border-bottom: 1px solid var(--border);
+    padding: 8px var(--pad) 16px;
+  }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a {
+    font-size: 15px; font-weight: 500; color: var(--secondary);
+    text-decoration: none; padding: 12px 0; border-bottom: 1px solid var(--border);
+  }
+  .nav-mobile a:last-child { border-bottom: none; }
+
+  @media (max-width: 760px) {
+    .nav-desktop { display: none; }
+    .nav-toggle { display: flex; }
+  }
+</style>
+
+<script>
+  function initNav() {
+    const toggle = document.getElementById('navToggle');
+    const panel = document.getElementById('navMobile');
+    if (!toggle || !panel) return;
+    const setOpen = (open: boolean) => {
+      panel.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.setAttribute('aria-hidden', String(!open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    toggle.addEventListener('click', () => setOpen(!panel.classList.contains('open')));
+    panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  }
+  initNav();
+  document.addEventListener('astro:page-load', initNav);
+</script>

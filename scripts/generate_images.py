@@ -42,6 +42,21 @@ MINIMAX_KEY = ("sk-cp-kP5LL6Wi4s-WsKji435cUjrY8137njNT9T_3t2hh3ASEf0BFrHkSDWJs8q
                "VEvxyx5oIrknMSegYNuACYl04MfoOMq0PA58heBel1nEQcdVgsWOEjXIw")
 # Logical size -> MiniMax aspect_ratio (WIDE = landscape hero/region, SQUARE = listing)
 SIZE_TO_ASPECT = {"1536x1024": "3:2", "1024x1024": "1:1", "1024x1536": "2:3"}
+# Logical size -> explicit width x height in pixels. image-01 supports 512-2048 px on each
+# side (must be divisible by 8); passing width/height instead of aspect_ratio gets us the
+# model's MAX resolution (~75% more pixels than the aspect_ratio default) for crisper heroes.
+# Note: MiniMax has a ~60s server-side render timeout. ~2.8 MP (e.g. 2048x1368) renders
+# reliably; 2048x2048 (4.2 MP) consistently times out. So squares/portraits are capped at
+# ~2.77 MP (1664x1664) to match the proven-working load while staying well above the old 1024px.
+SIZE_TO_WH = {
+    "1536x1024": (2048, 1368),   # 3:2 landscape (~2.80 MP)
+    "1024x1024": (1664, 1664),   # 1:1 square   (~2.77 MP)
+    "1024x1536": (1664, 2048),   # 2:3 portrait (~3.41 MP) -- unused, kept for completeness
+}
+# Best-of-N: generate this many candidates per prompt and keep them all so the strongest can
+# be picked. image-01 allows up to 9/request; 3 is a good quality-vs-speed balance. Candidate 1
+# becomes the default active pick ({name}.jpg); the rest are saved as {name}__c2.jpg, etc.
+N_CANDIDATES = 3
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 STAGING_DIR = os.path.join(ROOT, "image-staging")   # preview only, gitignored
 LIVE_DIR = os.path.join(ROOT, "public", "images")    # served + committed
@@ -129,14 +144,17 @@ THUMB_FROM = {
 PROMPTS = {name: prompt for name, _, prompt in IMAGES}
 
 
-def _generate_minimax(name, size, prompt):
+def _generate_minimax(name, size, prompt, n):
     # prompt_optimizer=False so MiniMax does NOT rewrite/embellish our prompt — keeps it
     # faithful to the real scene (aligns with the STYLE "no invented elements" directive).
+    # width/height (not aspect_ratio) -> full 2048px resolution. n -> best-of-N candidates.
+    w, h = SIZE_TO_WH.get(size, (1024, 1024))
     body = json.dumps({
         "model": "image-01",
         "prompt": f"{prompt} {STYLE}",
-        "aspect_ratio": SIZE_TO_ASPECT.get(size, "1:1"),
-        "n": 1,
+        "width": w,
+        "height": h,
+        "n": n,
         "prompt_optimizer": False,
         "response_format": "url",
     }).encode()
@@ -152,15 +170,19 @@ def _generate_minimax(name, size, prompt):
     urls = (data.get("data") or {}).get("image_urls") or []
     if not urls:
         raise RuntimeError(f"no image url for {name}: {data}")
-    with urllib.request.urlopen(urls[0], timeout=120) as r:
-        return Image.open(BytesIO(r.read())).convert("RGB")
+    imgs = []
+    for u in urls:
+        with urllib.request.urlopen(u, timeout=120) as r:
+            imgs.append(Image.open(BytesIO(r.read())).convert("RGB"))
+    return imgs
 
 
-def generate(name, size, prompt, retries=4):
+def generate(name, size, prompt, n=1, retries=4):
+    """Return a list of candidate PIL images (length up to n)."""
     last = None
     for attempt in range(1, retries + 1):
         try:
-            return _generate_minimax(name, size, prompt)
+            return _generate_minimax(name, size, prompt, n)
         except Exception as e:
             last = e
             if attempt < retries:
@@ -207,11 +229,34 @@ def build_preview(out_dir):
     custom = load_custom_prompts(out_dir)
 
     # Any staged .jpg that isn't a known wide/listing/thumb is a custom one-off.
+    # Candidate files ({name}__c2.jpg etc.) are NOT one-offs — exclude them here.
     known = set(wides) | set(listings) | set(thumbs)
     extras = sorted(
         f[:-4] for f in os.listdir(out_dir)
-        if f.endswith(".jpg") and f[:-4] not in known
+        if f.endswith(".jpg") and "__c" not in f and f[:-4] not in known
     )
+
+    def candidate_strip(name):
+        """Thumbnails of every candidate so the strongest can be picked."""
+        cands = sorted(
+            f for f in os.listdir(out_dir)
+            if f.startswith(f"{name}__c") and f.endswith(".jpg")
+        )
+        if len(cands) <= 1:
+            return ""
+        chips = ""
+        for f in cands:
+            k = f.split("__c")[1][:-4]
+            chips += (
+                f'<a href="{f}" target="_blank" title="candidate {k}">'
+                f'<img src="{f}" alt="candidate {k}" loading="lazy">'
+                f'<span>c{k}</span></a>'
+            )
+        return (
+            f'<div class="cands">{chips}</div>'
+            f'<p class="pickhint">To use a different one, tell Claude e.g. '
+            f'"set {escape(name)} to candidate 2".</p>'
+        )
 
     def card(name, is_thumb=False):
         jpg = f"{name}.jpg"
@@ -223,6 +268,7 @@ def build_preview(out_dir):
             f'<p class="prompt">{escape(prompt)}</p>' if prompt else
             '<p class="prompt muted">derived (center-crop of the matching wide)</p>'
         )
+        cands_html = "" if is_thumb else candidate_strip(name)
         return f"""
         <figure>
           <a href="{jpg}" target="_blank"><img src="{jpg}" alt="{escape(name)}" loading="lazy"></a>
@@ -230,6 +276,7 @@ def build_preview(out_dir):
             <strong>{escape(name)}</strong>
             <code>{escape(target)}</code>
             {prompt_html}
+            {cands_html}
           </figcaption>
         </figure>"""
 
@@ -261,6 +308,11 @@ def build_preview(out_dir):
   figcaption code {{ font-size:11px; color:var(--accent); display:block; margin:3px 0 8px; word-break:break-all; }}
   .prompt {{ font-size:12px; color:#555; line-height:1.5; margin:0; }}
   .prompt.muted {{ color:var(--muted); font-style:italic; }}
+  .cands {{ display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }}
+  .cands a {{ position:relative; display:block; width:64px; height:48px; border:1px solid var(--border); overflow:hidden; }}
+  .cands img {{ width:100%; height:100%; object-fit:cover; display:block; }}
+  .cands span {{ position:absolute; bottom:0; right:0; background:rgba(0,0,0,0.65); color:#fff; font-size:10px; padding:1px 4px; }}
+  .pickhint {{ font-size:11px; color:var(--muted); margin:6px 0 0; }}
   .tip {{ background:#fff; border:1px solid var(--border); border-left:3px solid var(--accent); padding:14px 16px; font-size:13px; line-height:1.6; margin-top:20px; }}
   .tip code {{ background:var(--surface); padding:2px 6px; border:1px solid var(--border); }}
 </style></head>
@@ -276,8 +328,8 @@ def build_preview(out_dir):
       <code>python3 scripts/generate_images.py --promote</code>.
     </div>
     {section("Custom / one-off", extras)}
-    {section("Hero & region wides (1536×1024)", wides)}
-    {section("Listing photos (1024×1024)", listings)}
+    {section("Hero & region wides (2048×1368)", wides)}
+    {section("Listing photos (2048×2048)", listings)}
     <h2>Region thumbnails (480px, derived)</h2>
     <div class="grid thumbs">{''.join(card(t, is_thumb=True) for t in thumbs)}</div>
   </main>
@@ -297,6 +349,8 @@ def promote(names_filter):
     for fn in sorted(os.listdir(STAGING_DIR)):
         if not fn.endswith(".jpg"):
             continue
+        if "__c" in fn:   # candidate alternates are staging-only, never promoted
+            continue
         base = fn[:-4]
         if names_filter and not (base in names_filter or base.replace("thumb-", "") in names_filter):
             continue
@@ -306,13 +360,31 @@ def promote(names_filter):
     print(f"PROMOTED {moved} image(s) into public/images/. Build + deploy to publish.")
 
 
+def pick(name, k):
+    """Make candidate k the active pick for `name` ({name}.jpg) and refresh thumbs+preview."""
+    src = os.path.join(STAGING_DIR, f"{name}__c{k}.jpg")
+    if not os.path.exists(src):
+        sys.exit(f"no candidate {k} for {name} (looked for {os.path.basename(src)})")
+    shutil.copy2(src, os.path.join(STAGING_DIR, f"{name}.jpg"))
+    print(f"  {name} -> candidate {k} is now the active pick", flush=True)
+    # If this name has region thumbnails derived from it, rebuild them from the new pick.
+    derive_thumbs(STAGING_DIR, {})
+    build_preview(STAGING_DIR)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", nargs="*", help="limit to these names")
     ap.add_argument("--promote", action="store_true",
                     help="copy staged images into public/images/ (the live folder)")
+    ap.add_argument("--pick", nargs=2, metavar=("NAME", "K"),
+                    help="set candidate K as the active pick for NAME (e.g. --pick porto 2)")
     ap.add_argument("--no-open", action="store_true", help="don't auto-open the preview")
     args = ap.parse_args()
+
+    if args.pick:
+        pick(args.pick[0], args.pick[1])
+        return
 
     if args.promote:
         promote(set(args.only) if args.only else None)
@@ -323,15 +395,24 @@ def main():
 
     saved = {}
     for i, (name, size, prompt) in enumerate(targets, 1):
-        print(f"[{i}/{len(targets)}] generating {name} ({size}) on MiniMax image-01 ...", flush=True)
+        w, h = SIZE_TO_WH.get(size, (1024, 1024))
+        print(f"[{i}/{len(targets)}] generating {name} ({w}x{h}, {N_CANDIDATES} candidates) "
+              f"on MiniMax image-01 ...", flush=True)
         try:
-            img = generate(name, size, prompt)
+            imgs = generate(name, size, prompt, n=N_CANDIDATES)
         except Exception as e:
             print(f"  FAILED {name}: {e}", flush=True)
             continue
-        img.save(os.path.join(STAGING_DIR, f"{name}.jpg"), "JPEG", quality=82, optimize=True)
-        saved[name] = img
-        print(f"  staged {name}.jpg", flush=True)
+        # Clear any stale candidates from a previous run, then save each candidate.
+        for old in os.listdir(STAGING_DIR):
+            if old.startswith(f"{name}__c") and old.endswith(".jpg"):
+                os.remove(os.path.join(STAGING_DIR, old))
+        for k, im in enumerate(imgs, 1):
+            im.save(os.path.join(STAGING_DIR, f"{name}__c{k}.jpg"), "JPEG", quality=82, optimize=True)
+        # Candidate 1 is the default active pick ({name}.jpg). Use --pick to switch.
+        imgs[0].save(os.path.join(STAGING_DIR, f"{name}.jpg"), "JPEG", quality=82, optimize=True)
+        saved[name] = imgs[0]
+        print(f"  staged {name}.jpg (+ {len(imgs)} candidates)", flush=True)
 
     derive_thumbs(STAGING_DIR, saved)
     preview = build_preview(STAGING_DIR)
